@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdyx04vwy1cd"]
+
+[ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
+
+[sub_resource type="Sky" id="Sky_3mnt6"]
+sky_material = SubResource("ProceduralSkyMaterial_77clq")
+
+[sub_resource type="Environment" id="Environment_ourdv"]
+background_mode = 2
+sky = SubResource("Sky_3mnt6")
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="TestMap" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ourdv")
+
+[node name="Player" parent="." instance=ExtResource("1_r6xxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 29)
+
+[node name="CentralPillar" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
+use_collision = true
+height = 15.0
+
+[node name="Pillar" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 7.5, -50)
+use_collision = true
+height = 15.0
+
+[node name="Pillar2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 7.5, 50)
+use_collision = true
+height = 15.0
+
+[node name="Pillar3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, 50)
+use_collision = true
+height = 15.0
+
+[node name="Pillar4" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, -50)
+use_collision = true
+height = 15.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
+visible = false
+use_collision = true
+flip_faces = true
+size = Vector3(100, 15, 100)

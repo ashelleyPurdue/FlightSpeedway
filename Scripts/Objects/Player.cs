@@ -10,8 +10,7 @@ namespace FlightSpeedway
         [Export] public float FlySpeed = 10;
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
-        [Export] public float YawRotSpeed = 180;
-        [Export] public float PitchRotSpeed = 90;
+        [Export] public float TurnRadius = 16;
         [Export] public float PitchReturnToNeutralMult = 0.98f;
 
         [Export] public float ModelMaxPitch = 45;
@@ -25,11 +24,13 @@ namespace FlightSpeedway
             float delta = (float)deltaD;
             Vector2 leftStick = LeftStick();
 
+            float rotSpeed = Mathf.RadToDeg(FlySpeed / TurnRadius);
+
             var rotationDegrees = RotationDegrees;
 
             if (leftStick.Y != 0)
             {
-                rotationDegrees.X += LeftStick().Y * PitchRotSpeed * delta;
+                rotationDegrees.X += LeftStick().Y * rotSpeed * delta;
                 rotationDegrees.X = Mathf.Clamp(rotationDegrees.X, MinPitchDegrees, MaxPitchDegrees);
             }
             else
@@ -37,7 +38,7 @@ namespace FlightSpeedway
                 rotationDegrees.X *= PitchReturnToNeutralMult;
             }
 
-            rotationDegrees.Y -= LeftStick().X * YawRotSpeed * delta;
+            rotationDegrees.Y -= LeftStick().X * rotSpeed * delta;
 
             RotationDegrees = rotationDegrees;
             Velocity = -GlobalTransform.Basis.Z * FlySpeed;

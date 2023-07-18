@@ -10,8 +10,8 @@ namespace FlightSpeedway
         [Export] public float FlySpeed = 10;
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
-        [Export] public float PitchRotSpeed = 180;
-        [Export] public float PitchReturnToNeutralSpeed = 45;
+        [Export] public float PitchRotSpeed = 90;
+        [Export] public float PitchReturnToNeutralMult = 0.98f;
         [Export] public float YawRotSpeed = 180;
 
         public override void _PhysicsProcess(double deltaD)
@@ -28,7 +28,7 @@ namespace FlightSpeedway
             }
             else
             {
-                rotationDegrees.X = Mathf.MoveToward(rotationDegrees.X, 0, PitchReturnToNeutralSpeed * delta);
+                rotationDegrees.X *= PitchReturnToNeutralMult;
             }
 
             rotationDegrees.Y -= LeftStick().X * YawRotSpeed * delta;

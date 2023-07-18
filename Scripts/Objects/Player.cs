@@ -16,8 +16,8 @@ namespace FlightSpeedway
             float delta = (float)deltaD;
 
             var rotationDegrees = RotationDegrees;
-            rotationDegrees.X += LeftStick.Y * PitchRotSpeedDegreesPerSecond * delta;
-            rotationDegrees.Y -= LeftStick.X * YawRotSpeedDegreesPerSecond * delta;
+            rotationDegrees.X += LeftStick().Y * PitchRotSpeedDegreesPerSecond * delta;
+            rotationDegrees.Y -= LeftStick().X * YawRotSpeedDegreesPerSecond * delta;
 
             rotationDegrees.X = Mathf.Clamp(rotationDegrees.X, MinPitchDegrees, MaxPitchDegrees);
 
@@ -28,10 +28,18 @@ namespace FlightSpeedway
             MoveAndSlide();
         }
 
-        private Vector2 LeftStick => new Vector2(
-            Input.GetJoyAxis(0, JoyAxis.LeftX),
-            Input.GetJoyAxis(0, JoyAxis.LeftY)
-        );
+        private Vector2 LeftStick()
+        {
+            var raw = new Vector2(
+                Input.GetJoyAxis(0, JoyAxis.LeftX),
+                Input.GetJoyAxis(0, JoyAxis.LeftY)
+            );
+
+            if (raw.Length() < 0.1f)
+                return Vector2.Zero;
+
+            return raw;
+        }
     }
 }
 

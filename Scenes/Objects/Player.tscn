@@ -36,6 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_wfdmf")
 
 [node name="Model" type="Node3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Body" type="MeshInstance3D" parent="Model"]
@@ -45,16 +46,16 @@ mesh = SubResource("SphereMesh_1bdve")
 transform = Transform3D(2.64329, 0, 0, 0, 0.0958397, 0, 0, 0, 0.672003, 0, 0, 0)
 mesh = SubResource("BoxMesh_o74nm")
 
-[node name="Camera" type="Camera3D" parent="."]
+[node name="VelocityArrow" type="Node3D" parent="Model"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53717, 0)
 
-[node name="VelocityArrow" type="Node3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03717, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VelocityArrow"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/VelocityArrow"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
 sorting_offset = 100.0
 mesh = SubResource("CylinderMesh_alxjc")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="Camera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

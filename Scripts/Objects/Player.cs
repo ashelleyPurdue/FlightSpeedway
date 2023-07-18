@@ -10,9 +10,15 @@ namespace FlightSpeedway
         [Export] public float FlySpeed = 10;
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
+        [Export] public float YawRotSpeed = 180;
         [Export] public float PitchRotSpeed = 90;
         [Export] public float PitchReturnToNeutralMult = 0.98f;
-        [Export] public float YawRotSpeed = 180;
+
+        [Export] public float ModelMaxPitch = 45;
+        [Export] public float ModelMaxRoll = 45;
+        [Export] public float ModelRotDecayRate = 5;
+
+        private Node3D _model => GetNode<Node3D>("%Model");
 
         public override void _PhysicsProcess(double deltaD)
         {
@@ -38,6 +44,25 @@ namespace FlightSpeedway
             MoveAndSlide();
         }
 
+        public override void _Process(double deltaD)
+        {
+            float delta = (float)deltaD;
+            var leftStick = LeftStick();
+
+            var targetModelRot = new Vector3(
+                Mathf.Lerp(0, ModelMaxPitch, leftStick.Y),
+                0,
+                Mathf.Lerp(0, ModelMaxRoll, -leftStick.X)
+            );
+
+            _model.RotationDegrees = DecayToward(
+                _model.RotationDegrees,
+                targetModelRot,
+                ModelRotDecayRate,
+                delta
+            );
+        }
+
         private Vector2 LeftStick()
         {
             var raw = new Vector2(
@@ -49,6 +74,13 @@ namespace FlightSpeedway
                 return Vector2.Zero;
 
             return raw;
+        }
+
+        private Vector3 DecayToward(Vector3 from, Vector3 to, float decayRate, float delta)
+        {
+            float remaining = from.DistanceTo(to);
+            remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
+            return to.MoveToward(from, remaining);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace FlightSpeedway
 
             var targetModelRot = new Vector3(
                 Mathf.Lerp(0, ModelMaxPitch, leftStick.Y),
-                0,
+                Mathf.Lerp(0, ModelMaxRoll, -leftStick.X),
                 Mathf.Lerp(0, ModelMaxRoll, -leftStick.X)
             );
 

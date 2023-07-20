@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=3 uid="uid://diobf180u0eui"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/Player.cs" id="1_oouht"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
+
+[sub_resource type="Gradient" id="Gradient_thpy4"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v3ik0"]
+gradient = SubResource("Gradient_thpy4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.204301, 0.295699)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ey0p0"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_v3ik0")
+disable_receive_shadows = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tilk7"]
+material = SubResource("StandardMaterial3D_ey0p0")
+orientation = 2
+
+[sub_resource type="Curve" id="Curve_jv7u6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0899281, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_rldb6"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1bdve"]
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxMesh" id="BoxMesh_o74nm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12l1j"]
+albedo_color = Color(1, 0, 0, 1)
+metallic = 1.0
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 0.3
+rim = 0.48
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_alxjc"]
+material = SubResource("StandardMaterial3D_12l1j")
+top_radius = 0.05
+bottom_radius = 0.05
+radial_segments = 8
+rings = 2
+
+[node name="Player" type="CharacterBody3D"]
+disable_mode = 2
+input_ray_pickable = false
+motion_mode = 1
+script = ExtResource("1_oouht")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_wfdmf")
+
+[node name="Model" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="LeftWingParticles" type="CPUParticles3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.325, 0, 0.338)
+cast_shadow = 0
+amount = 16
+lifetime = 0.5
+mesh = SubResource("PlaneMesh_tilk7")
+direction = Vector3(0, 0, 1)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+scale_amount_min = 0.25
+scale_amount_max = 0.25
+scale_amount_curve = SubResource("Curve_jv7u6")
+color_ramp = SubResource("Gradient_rldb6")
+
+[node name="RightWingParticles" type="CPUParticles3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.325, 0, 0.338)
+cast_shadow = 0
+amount = 16
+lifetime = 0.5
+mesh = SubResource("PlaneMesh_tilk7")
+direction = Vector3(0, 0, 1)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+scale_amount_min = 0.25
+scale_amount_max = 0.25
+scale_amount_curve = SubResource("Curve_jv7u6")
+color_ramp = SubResource("Gradient_rldb6")
+
+[node name="Body" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("SphereMesh_1bdve")
+
+[node name="Wings" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(2.64329, 0, 0, 0, 0.0958397, 0, 0, 0, 0.672003, 0, 0, 0)
+mesh = SubResource("BoxMesh_o74nm")
+
+[node name="VelocityArrow" type="Node3D" parent="Model"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53717, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/VelocityArrow"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
+sorting_offset = 100.0
+mesh = SubResource("CylinderMesh_alxjc")
+skeleton = NodePath("../../..")
+
+[node name="Camera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

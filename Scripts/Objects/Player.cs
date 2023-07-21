@@ -20,6 +20,8 @@ namespace FlightSpeedway
 
         [Export] public float MaxAccel = 10;
 
+        [Export] public float ModelMaxPitchDegrees = 45;
+        [Export] public float ModelMaxRollDegrees = 45;
         [Export] public float ModelRotDecayRate = 5;
 
         public float PitchRad { get; private set; }
@@ -53,6 +55,7 @@ namespace FlightSpeedway
                 .Rotated(Vector3.Up, YawRad);
 
             Velocity = Speed * forward;
+            Rotation = new Vector3(PitchRad, YawRad, 0);
 
             MoveAndSlide();
         }
@@ -60,8 +63,20 @@ namespace FlightSpeedway
         public override void _Process(double deltaD)
         {
             float delta = (float)deltaD;
+            var leftStick = LeftStick();
 
-            _model.Rotation = new Vector3(PitchRad, YawRad, 0);
+            var targetModelRot = new Vector3(
+                Mathf.Lerp(0, ModelMaxPitchDegrees, leftStick.Y),
+                Mathf.Lerp(0, ModelMaxRollDegrees, -leftStick.X),
+                Mathf.Lerp(0, ModelMaxRollDegrees, -leftStick.X)
+            );
+
+            _model.RotationDegrees = DecayToward(
+                _model.RotationDegrees,
+                targetModelRot,
+                ModelRotDecayRate,
+                delta
+            );
         }
 
         private void UpdatePitch(float delta)
@@ -114,6 +129,13 @@ namespace FlightSpeedway
                 return Vector2.Zero;
 
             return raw;
+        }
+
+        private Vector3 DecayToward(Vector3 from, Vector3 to, float decayRate, float delta)
+        {
+            float remaining = from.DistanceTo(to);
+            remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
+            return to.MoveToward(from, remaining);
         }
     }
 }

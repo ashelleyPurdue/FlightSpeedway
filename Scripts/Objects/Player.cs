@@ -11,7 +11,9 @@ namespace FlightSpeedway
         [Export] public float MinPitchDegrees = -90;
 
         [Export] public float PitchRotSpeedDegrees = 90;
+        [Export] public float PitchRotAccelDegrees = 360;
         [Export] public float YawRotSpeedDegrees = 90;
+        [Export] public float YawRotAccelDegrees = 360;
 
         [Export] public float MinFlySpeed = 7;
         [Export] public float MaxFlySpeed = 15;
@@ -29,8 +31,13 @@ namespace FlightSpeedway
 
         private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
         private float _minPitchRad => Mathf.DegToRad(MinPitchDegrees);
-        private float _pitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);
-        private float _yawRotSpeedRad => Mathf.DegToRad(YawRotSpeedDegrees);
+        private float _maxPitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);
+        private float _pitchRotAccelRad => Mathf.DegToRad(PitchRotAccelDegrees);
+        private float _maxYawRotSpeedRad => Mathf.DegToRad(YawRotSpeedDegrees);
+        private float _yawRotAccelRad => Mathf.DegToRad(YawRotAccelDegrees);
+
+        private float _pitchRotSpeedRad;
+        private float _yawRotSpeedRad;
 
 
         public override void _PhysicsProcess(double deltaD)
@@ -60,14 +67,30 @@ namespace FlightSpeedway
         private void UpdatePitch(float delta)
         {
             var leftStick = LeftStick();
-            PitchRad += leftStick.Y * _pitchRotSpeedRad * delta;
+
+            float targetPitchRotSpeedRad = _maxPitchRad * leftStick.Y;
+            _pitchRotSpeedRad = Mathf.MoveToward(
+                _pitchRotSpeedRad,
+                targetPitchRotSpeedRad,
+                _pitchRotAccelRad * delta
+            );
+
+            PitchRad += _pitchRotSpeedRad * delta;
             PitchRad = Mathf.Clamp(PitchRad, _minPitchRad, _maxPitchRad);
         }
 
         private void UpdateYaw(float delta)
         {
             var leftStick = LeftStick();
-            YawRad -= leftStick.X * _yawRotSpeedRad * delta;
+
+            float targetYawRotSpeedRad = -leftStick.X * _maxYawRotSpeedRad;
+            _yawRotSpeedRad = Mathf.MoveToward(
+                _yawRotSpeedRad,
+                targetYawRotSpeedRad,
+                _yawRotAccelRad * delta
+            );
+
+            YawRad += _yawRotSpeedRad * delta;
             YawRad = Mathf.PosMod(YawRad, Mathf.DegToRad(360));
         }
 

@@ -9,10 +9,9 @@ namespace FlightSpeedway
 
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
-        [Export] public float PitchRotSpeed = 360 * 2;
-        [Export] public float PitchReturnToNeutralMult = 0.98f;
 
-        [Export] public float YawRotSpeed = 180;
+        [Export] public float PitchRotSpeedDegrees = 180;
+        [Export] public float YawRotSpeedDegrees = 180;
 
         [Export] public float MinFlySpeed = 5;
         [Export] public float MaxFlySpeed = 10;
@@ -22,6 +21,12 @@ namespace FlightSpeedway
         [Export] public float ModelRotDecayRate = 5;
 
         private Node3D _model => GetNode<Node3D>("%Model");
+
+        private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
+        private float _minPitchRad => Mathf.DegToRad(MinPitchDegrees);
+        private float _pitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);
+        private float _yawRotSpeedRad => Mathf.DegToRad(YawRotSpeedDegrees);
+
         private float _pitchRad;
         private float _yawRad;
         private float _speed;
@@ -53,23 +58,14 @@ namespace FlightSpeedway
         private void UpdatePitch(float delta)
         {
             var leftStick = LeftStick();
-
-            if (leftStick.Y != 0)
-            {
-                float t = (leftStick.Y + 1) / 2;
-                float pitchDeg = Mathf.Lerp(MinPitchDegrees, MaxPitchDegrees, t);
-                _pitchRad = Mathf.DegToRad(_pitchRad);
-            }
-            else
-            {
-                _pitchRad *= PitchReturnToNeutralMult;
-            }
+            _pitchRad += leftStick.Y * _pitchRotSpeedRad * delta;
+            _pitchRad = Mathf.Clamp(_pitchRad, _minPitchRad, _maxPitchRad);
         }
 
         private void UpdateYaw(float delta)
         {
             var leftStick = LeftStick();
-            _yawRad += leftStick.X * Mathf.DegToRad(YawRotSpeed) * delta;
+            _yawRad += leftStick.X * _yawRotSpeedRad * delta;
             _yawRad = Mathf.PosMod(_yawRad, Mathf.DegToRad(360));
         }
 
@@ -93,20 +89,6 @@ namespace FlightSpeedway
                 return Vector2.Zero;
 
             return raw;
-        }
-
-        private Vector3 EulerToDir(Vector3 eulerRad)
-        {
-            return Vector3.Forward
-                .Rotated(Vector3.Up, eulerRad.Y)
-                .Rotated(Vector3.Right, eulerRad.X);
-        }
-
-        private float AngleDiff(float fromRad, float toRad)
-        {
-            Vector2 from = Vector2.Up.Rotated(fromRad);
-            Vector2 to = Vector2.Up.Rotated(toRad);
-            return from.AngleTo(to);
         }
     }
 }

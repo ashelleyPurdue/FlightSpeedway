@@ -20,6 +20,11 @@ namespace FlightSpeedway
 
         [Export] public float ModelRotDecayRate = 5;
 
+        public float PitchRad { get; private set; }
+        public float YawRad { get; private set; }
+        public float Speed { get; private set; }
+
+
         private Node3D _model => GetNode<Node3D>("%Model");
 
         private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
@@ -27,9 +32,6 @@ namespace FlightSpeedway
         private float _pitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);
         private float _yawRotSpeedRad => Mathf.DegToRad(YawRotSpeedDegrees);
 
-        private float _pitchRad;
-        private float _yawRad;
-        private float _speed;
 
         public override void _PhysicsProcess(double deltaD)
         {
@@ -40,10 +42,10 @@ namespace FlightSpeedway
             UpdateSpeed(delta);
 
             Vector3 forward = Vector3.Forward
-                .Rotated(Vector3.Right, _pitchRad)
-                .Rotated(Vector3.Up, _yawRad);
+                .Rotated(Vector3.Right, PitchRad)
+                .Rotated(Vector3.Up, YawRad);
 
-            Velocity = _speed * forward;
+            Velocity = Speed * forward;
 
             MoveAndSlide();
         }
@@ -52,30 +54,30 @@ namespace FlightSpeedway
         {
             float delta = (float)deltaD;
 
-            _model.Rotation = new Vector3(_pitchRad, _yawRad, 0);
+            _model.Rotation = new Vector3(PitchRad, YawRad, 0);
         }
 
         private void UpdatePitch(float delta)
         {
             var leftStick = LeftStick();
-            _pitchRad += leftStick.Y * _pitchRotSpeedRad * delta;
-            _pitchRad = Mathf.Clamp(_pitchRad, _minPitchRad, _maxPitchRad);
+            PitchRad += leftStick.Y * _pitchRotSpeedRad * delta;
+            PitchRad = Mathf.Clamp(PitchRad, _minPitchRad, _maxPitchRad);
         }
 
         private void UpdateYaw(float delta)
         {
             var leftStick = LeftStick();
-            _yawRad -= leftStick.X * _yawRotSpeedRad * delta;
-            _yawRad = Mathf.PosMod(_yawRad, Mathf.DegToRad(360));
+            YawRad -= leftStick.X * _yawRotSpeedRad * delta;
+            YawRad = Mathf.PosMod(YawRad, Mathf.DegToRad(360));
         }
 
         private void UpdateSpeed(float delta)
         {
-            float t = Mathf.InverseLerp(MinPitchDegrees, MaxPitchDegrees, _pitchRad);
+            float t = Mathf.InverseLerp(MinPitchDegrees, MaxPitchDegrees, Mathf.RadToDeg(PitchRad));
             float accel = Mathf.Lerp(MaxAccel, -MaxAccel, t);
 
-            _speed += accel * delta;
-            _speed = Mathf.Clamp(_speed, MinFlySpeed, MaxFlySpeed);
+            Speed += accel * delta;
+            Speed = Mathf.Clamp(Speed, MinFlySpeed, MaxFlySpeed);
         }
 
         private Vector2 LeftStick()

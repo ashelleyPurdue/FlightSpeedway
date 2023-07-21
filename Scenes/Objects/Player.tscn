@@ -57,11 +57,13 @@ bottom_radius = 0.05
 radial_segments = 8
 rings = 2
 
-[sub_resource type="GDScript" id="GDScript_y731f"]
-script/source = "extends Label
+[sub_resource type="GDScript" id="GDScript_7sya3"]
+script/source = "extends VBoxContainer
 
 func _process(delta):
-    text = str($'..'.velocity.length())
+    $'./Speed'.text = str(owner.Speed)
+    $'./Pitch'.text = str(rad_to_deg(owner.PitchRad))
+    
 "
 
 [node name="Player" type="CharacterBody3D"]
@@ -127,7 +129,13 @@ skeleton = NodePath("../../..")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
 
-[node name="SpeedLabel" type="Label" parent="."]
+[node name="DebugStats" type="VBoxContainer" parent="."]
 offset_right = 40.0
-offset_bottom = 23.0
-script = SubResource("GDScript_y731f")
+offset_bottom = 40.0
+script = SubResource("GDScript_7sya3")
+
+[node name="Speed" type="Label" parent="DebugStats"]
+layout_mode = 2
+
+[node name="Pitch" type="Label" parent="DebugStats"]
+layout_mode = 2

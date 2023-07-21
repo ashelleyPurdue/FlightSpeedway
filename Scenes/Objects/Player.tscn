@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=14 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player.cs" id="1_oouht"]
 
@@ -56,6 +56,13 @@ top_radius = 0.05
 bottom_radius = 0.05
 radial_segments = 8
 rings = 2
+
+[sub_resource type="GDScript" id="GDScript_y731f"]
+script/source = "extends Label
+
+func _process(delta):
+    text = str($'..'.velocity.length())
+"
 
 [node name="Player" type="CharacterBody3D"]
 disable_mode = 2
@@ -119,3 +126,8 @@ skeleton = NodePath("../../..")
 [node name="Camera" type="Camera3D" parent="Model"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
+
+[node name="SpeedLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = SubResource("GDScript_y731f")

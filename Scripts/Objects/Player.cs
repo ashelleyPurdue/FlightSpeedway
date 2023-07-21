@@ -10,8 +10,8 @@ namespace FlightSpeedway
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
 
-        [Export] public float PitchRotSpeedDegrees = 180;
-        [Export] public float YawRotSpeedDegrees = 180;
+        [Export] public float PitchRotSpeedDegrees = 90;
+        [Export] public float YawRotSpeedDegrees = 90;
 
         [Export] public float MinFlySpeed = 5;
         [Export] public float MaxFlySpeed = 10;

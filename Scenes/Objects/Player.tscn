@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=14 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player.cs" id="1_oouht"]
 
@@ -56,6 +56,15 @@ top_radius = 0.05
 bottom_radius = 0.05
 radial_segments = 8
 rings = 2
+
+[sub_resource type="GDScript" id="GDScript_7sya3"]
+script/source = "extends VBoxContainer
+
+func _process(delta):
+    $'./Speed'.text = str(owner.Speed)
+    $'./Pitch'.text = str(rad_to_deg(owner.PitchRad))
+    
+"
 
 [node name="Player" type="CharacterBody3D"]
 disable_mode = 2
@@ -116,6 +125,17 @@ sorting_offset = 100.0
 mesh = SubResource("CylinderMesh_alxjc")
 skeleton = NodePath("../../..")
 
-[node name="Camera" type="Camera3D" parent="."]
+[node name="Camera" type="Camera3D" parent="Model"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 6)
+
+[node name="DebugStats" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_7sya3")
+
+[node name="Speed" type="Label" parent="DebugStats"]
+layout_mode = 2
+
+[node name="Pitch" type="Label" parent="DebugStats"]
+layout_mode = 2

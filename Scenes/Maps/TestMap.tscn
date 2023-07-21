@@ -48,6 +48,5 @@ height = 15.0
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
 visible = false
-use_collision = true
 flip_faces = true
 size = Vector3(100, 15, 100)

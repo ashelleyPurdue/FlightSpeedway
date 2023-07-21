@@ -65,7 +65,7 @@ namespace FlightSpeedway
         private void UpdateYaw(float delta)
         {
             var leftStick = LeftStick();
-            _yawRad += leftStick.X * _yawRotSpeedRad * delta;
+            _yawRad -= leftStick.X * _yawRotSpeedRad * delta;
             _yawRad = Mathf.PosMod(_yawRad, Mathf.DegToRad(360));
         }
 

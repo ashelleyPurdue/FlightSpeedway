@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
 [ext_resource type="Script" path="res://Scripts/Objects/RingPath.cs" id="2_g4vro"]
-[ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scripts/Objects/Ring.tscn" id="2_v2vty"]
+[ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scenes/Objects/Ring.tscn" id="3_dcjje"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 
@@ -64,5 +64,5 @@ size = Vector3(100, 15, 100)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 17.8811, 24.86)
 curve = SubResource("Curve3D_ppicx")
 script = ExtResource("2_g4vro")
-RingPrefab = ExtResource("2_v2vty")
+RingPrefab = ExtResource("3_dcjje")
 RingCount = 8

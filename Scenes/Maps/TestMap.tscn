@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdyx04vwy1cd"]
+[gd_scene load_steps=8 format=3 uid="uid://cdyx04vwy1cd"]
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
+[ext_resource type="Script" path="res://Scripts/Objects/RingPath.cs" id="2_g4vro"]
+[ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scripts/Objects/Ring.tscn" id="2_v2vty"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 
@@ -12,13 +14,20 @@ background_mode = 2
 sky = SubResource("Sky_3mnt6")
 ambient_light_color = Color(1, 1, 1, 1)
 
+[sub_resource type="Curve3D" id="Curve3D_ppicx"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.946041, -3.24249e-05, 11.4384, 0, 0, 0, 0, 0, 0, -13.8678, -3.24249e-05, -6.6041, 0, 0, 0, 0, 0, 0, -31.7204, -3.24249e-05, -21.9877, 0, 0, 0, 0, 0, 0, -36.8483, -3.24249e-05, -53.5146, 0, 0, 0, 0, 0, 0, -17.6662, -3.24249e-05, -76.8749, 0, 0, 0, 0, 0, 0, 14.6204, -3.24249e-05, -79.154, 0, 0, 0, 0, 0, 0, 44.0581, -3.24249e-05, -62.8208, 0, 0, 0, 0, 0, 0, 55.8332, -3.24249e-05, -32.8132),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
 [node name="TestMap" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ourdv")
 
 [node name="Player" parent="." instance=ExtResource("1_r6xxd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 29)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 49.5115)
 
 [node name="CentralPillar" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
@@ -50,3 +59,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
 visible = false
 flip_faces = true
 size = Vector3(100, 15, 100)
+
+[node name="RingPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 7.17264, 24.86)
+curve = SubResource("Curve3D_ppicx")
+script = ExtResource("2_g4vro")
+RingPrefab = ExtResource("2_v2vty")
+RingCount = 8

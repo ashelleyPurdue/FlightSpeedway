@@ -26,8 +26,6 @@ namespace FlightSpeedway
         public float YawRad { get; private set; }
         public float Speed { get; private set; }
 
-        private Node3D _model => GetNode<Node3D>("%Model");
-
         private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
         private float _minPitchRad => Mathf.DegToRad(MinPitchDegrees);
         private float _maxPitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);

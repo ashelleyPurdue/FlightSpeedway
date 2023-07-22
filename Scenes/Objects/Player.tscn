@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=15 format=3 uid="uid://diobf180u0eui"]
 
-[ext_resource type="Script" path="res://Scripts/Objects/Player.cs" id="1_oouht"]
+[ext_resource type="Script" path="res://Scripts/Objects/Player/Player.cs" id="1_yrsdm"]
+[ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerFlyState.cs" id="2_ra6ri"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
 
@@ -61,16 +62,18 @@ rings = 2
 script/source = "extends VBoxContainer
 
 func _process(delta):
-    $'./Speed'.text = str(owner.Speed)
-    $'./Pitch'.text = str(rad_to_deg(owner.PitchRad))
-    
+    $'./Speed'.text = str($'../PlayerFlyState'.Speed)
+    $'./Pitch'.text = str(rad_to_deg($'../PlayerFlyState'.PitchRad))
 "
 
 [node name="Player" type="CharacterBody3D"]
 disable_mode = 2
 input_ray_pickable = false
 motion_mode = 1
-script = ExtResource("1_oouht")
+script = ExtResource("1_yrsdm")
+
+[node name="PlayerFlyState" type="Node" parent="."]
+script = ExtResource("2_ra6ri")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

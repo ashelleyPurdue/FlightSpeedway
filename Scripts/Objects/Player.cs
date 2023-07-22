@@ -39,6 +39,26 @@ namespace FlightSpeedway
         private float _pitchRotSpeedRad;
         private float _yawRotSpeedRad;
 
+        private Vector3 _spawnPoint;
+
+        public override void _Ready()
+        {
+            SignalBus.Instance.LevelReset += Respawn;
+
+            _spawnPoint = Position;
+            Respawn();
+        }
+
+        private void Respawn()
+        {
+            Position = _spawnPoint;
+            PitchRad = 0;
+            YawRad = 0;
+            Speed = MinFlySpeed;
+
+            _pitchRotSpeedRad = 0;
+            _yawRotSpeedRad = 0;
+        }
 
         public override void _PhysicsProcess(double deltaD)
         {

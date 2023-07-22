@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=16 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player/Player.cs" id="1_yrsdm"]
 [ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerFlyState.cs" id="2_ra6ri"]
+[ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerWaterCrashState.cs" id="3_r6rkq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
 
@@ -74,6 +75,9 @@ script = ExtResource("1_yrsdm")
 
 [node name="PlayerFlyState" type="Node" parent="."]
 script = ExtResource("2_ra6ri")
+
+[node name="PlayerWaterCrashState" type="Node" parent="."]
+script = ExtResource("3_r6rkq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

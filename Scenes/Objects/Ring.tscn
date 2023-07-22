@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt22ryks838qb"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/Ring.cs" id="1_32o5t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myrad"]
+transparency = 1
+albedo_color = Color(1, 0.392157, 0.392157, 0.701961)
+
+[sub_resource type="GDScript" id="GDScript_rifw7"]
+script/source = "extends CSGCombiner3D
+
+func _process(_delta):
+    visible = owner.Alive
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wsi1m"]
+height = 0.25
+radius = 4.0
+
+[node name="Ring" type="Area3D"]
+script = ExtResource("1_32o5t")
+
+[node name="Model" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_myrad")
+script = SubResource("GDScript_rifw7")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00392807, 1.19209e-07, -0.00364971)
+radius = 4.0
+height = 0.3
+sides = 15
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Model"]
+operation = 2
+radius = 3.7
+height = 1.0
+sides = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_wsi1m")

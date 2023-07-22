@@ -3,7 +3,7 @@ using System;
 
 namespace FlightSpeedway
 {
-    public partial class Player : CharacterBody3D
+    public partial class PlayerFlyState : PlayerState
     {
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
@@ -27,6 +27,8 @@ namespace FlightSpeedway
         public float Speed { get; private set; }
 
 
+        private Player _player => GetParent<Player>();
+
         private Node3D _model => GetNode<Node3D>("%Model");
 
         private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
@@ -43,15 +45,13 @@ namespace FlightSpeedway
 
         public override void _Ready()
         {
-            SignalBus.Instance.LevelReset += Respawn;
-
-            _spawnPoint = Position;
-            Respawn();
+            _player.Respawning += OnRespawning;
+            _spawnPoint = _player.Position;
         }
 
-        private void Respawn()
+        public void OnRespawning()
         {
-            Position = _spawnPoint;
+            _player.Position = _spawnPoint;
             PitchRad = 0;
             YawRad = 0;
             Speed = MinFlySpeed;
@@ -72,10 +72,10 @@ namespace FlightSpeedway
                 .Rotated(Vector3.Right, PitchRad)
                 .Rotated(Vector3.Up, YawRad);
 
-            Velocity = Speed * forward;
-            Rotation = new Vector3(PitchRad, YawRad, 0);
+            _player.Velocity = Speed * forward;
+            _player.Rotation = new Vector3(PitchRad, YawRad, 0);
 
-            MoveAndSlide();
+            _player.MoveAndSlide();
         }
 
         public override void _Process(double deltaD)

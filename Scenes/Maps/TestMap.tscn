@@ -16,10 +16,10 @@ ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_ppicx"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.946041, -3.24249e-05, 11.4384, 0, 0, 0, 0, 0, 0, -13.8678, -3.24249e-05, -6.6041, 0, 0, 0, 0, 0, 0, -31.7204, -3.24249e-05, -21.9877, 0, 0, 0, 0, 0, 0, -36.8483, -3.24249e-05, -53.5146, 0, 0, 0, 0, 0, 0, -17.6662, -3.24249e-05, -76.8749, 0, 0, 0, 0, 0, 0, 14.6204, -3.24249e-05, -79.154, 0, 0, 0, 0, 0, 0, 44.0581, -3.24249e-05, -62.8208, 0, 0, 0, 0, 0, 0, 55.8332, -3.24249e-05, -32.8132),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.946041, -3.24249e-05, 11.4384, 0, 0, 0, 0, 0, 0, 0.285453, -3.41139, -1.11348, 0, 0, 0, 0, 0, 0, -12.0705, -6.18129, -12.6457, 0, 0, 0, 0, 0, 0, -31.7205, -10.0254, -22.0348, 0, 0, 0, 0, 0, 0, -36.8483, -8.65254, -54.0229, 0, 0, 0, 0, 0, 0, -17.6663, -6.18135, -75.8518, 0, 0, 0, 0, 0, 0, 14.6204, -3.24249e-05, -79.154, 0, 0, 0, 0, 0, 0, 44.0581, 1.64408, -61.2992, 0, 0, 0, 0, 0, 0, 55.8333, 3.01696, -32.8806),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 8
+point_count = 9
 
 [node name="TestMap" type="Node3D"]
 
@@ -27,7 +27,7 @@ point_count = 8
 environment = SubResource("Environment_ourdv")
 
 [node name="Player" parent="." instance=ExtResource("1_r6xxd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 49.5115)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.7085, 49.5115)
 
 [node name="CentralPillar" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
@@ -61,7 +61,7 @@ flip_faces = true
 size = Vector3(100, 15, 100)
 
 [node name="RingPath" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 7.17264, 24.86)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 17.8811, 24.86)
 curve = SubResource("Curve3D_ppicx")
 script = ExtResource("2_g4vro")
 RingPrefab = ExtResource("2_v2vty")

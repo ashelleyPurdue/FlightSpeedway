@@ -5,8 +5,6 @@ namespace FlightSpeedway
 {
     public partial class Player : CharacterBody3D
     {
-        public const float LeftStickDeadzone = 0.1f;
-
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
 
@@ -63,12 +61,11 @@ namespace FlightSpeedway
         public override void _Process(double deltaD)
         {
             float delta = (float)deltaD;
-            var leftStick = LeftStick();
 
             var targetModelRot = new Vector3(
-                Mathf.Lerp(0, ModelMaxPitchDegrees, leftStick.Y),
-                Mathf.Lerp(0, ModelMaxRollDegrees, -leftStick.X),
-                Mathf.Lerp(0, ModelMaxRollDegrees, -leftStick.X)
+                Mathf.Lerp(0, ModelMaxPitchDegrees, -LeftStick().Y),
+                Mathf.Lerp(0, ModelMaxRollDegrees, -LeftStick().X),
+                Mathf.Lerp(0, ModelMaxRollDegrees, -LeftStick().X)
             );
 
             _model.RotationDegrees = DecayToward(
@@ -81,9 +78,7 @@ namespace FlightSpeedway
 
         private void UpdatePitch(float delta)
         {
-            var leftStick = LeftStick();
-
-            float targetPitchRotSpeedRad = _maxPitchRad * leftStick.Y;
+            float targetPitchRotSpeedRad = _maxPitchRad * -LeftStick().Y;
             _pitchRotSpeedRad = Mathf.MoveToward(
                 _pitchRotSpeedRad,
                 targetPitchRotSpeedRad,
@@ -96,9 +91,7 @@ namespace FlightSpeedway
 
         private void UpdateYaw(float delta)
         {
-            var leftStick = LeftStick();
-
-            float targetYawRotSpeedRad = -leftStick.X * _maxYawRotSpeedRad;
+            float targetYawRotSpeedRad = -LeftStick().X * _maxYawRotSpeedRad;
             _yawRotSpeedRad = Mathf.MoveToward(
                 _yawRotSpeedRad,
                 targetYawRotSpeedRad,
@@ -118,25 +111,14 @@ namespace FlightSpeedway
             Speed = Mathf.Clamp(Speed, MinFlySpeed, MaxFlySpeed);
         }
 
-        private Vector2 LeftStick()
-        {
-            var raw = new Vector2(
-                Input.GetJoyAxis(0, JoyAxis.LeftX),
-                Input.GetJoyAxis(0, JoyAxis.LeftY)
-            );
-
-            if (raw.Length() < LeftStickDeadzone)
-                return Vector2.Zero;
-
-            return raw;
-        }
-
         private Vector3 DecayToward(Vector3 from, Vector3 to, float decayRate, float delta)
         {
             float remaining = from.DistanceTo(to);
             remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
             return to.MoveToward(from, remaining);
         }
+
+        private static Vector2 LeftStick() => InputService.LeftStick;
     }
 }
 

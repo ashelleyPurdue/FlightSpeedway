@@ -85,7 +85,7 @@ namespace FlightSpeedway
                 Mathf.Lerp(0, ModelMaxRollDegrees, -LeftStick().X)
             );
 
-            _model.RotationDegrees = DecayToward(
+            _model.RotationDegrees = MathUtils.DecayToward(
                 _model.RotationDegrees,
                 targetModelRot,
                 ModelRotDecayRate,
@@ -126,13 +126,6 @@ namespace FlightSpeedway
 
             Speed += accel * delta;
             Speed = Mathf.Clamp(Speed, MinFlySpeed, MaxFlySpeed);
-        }
-
-        private Vector3 DecayToward(Vector3 from, Vector3 to, float decayRate, float delta)
-        {
-            float remaining = from.DistanceTo(to);
-            remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
-            return to.MoveToward(from, remaining);
         }
 
         private static Vector2 LeftStick() => InputService.LeftStick;

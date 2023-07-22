@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/Maps/TestMap.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalBus="*res://Scripts/Services/SignalBus.cs"
+
 [dotnet]
 
 project/assembly_name="Flight Speedway"

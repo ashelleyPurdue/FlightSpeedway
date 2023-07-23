@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
 [ext_resource type="Script" path="res://Scripts/Objects/RingPath.cs" id="2_g4vro"]
 [ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scenes/Objects/Ring.tscn" id="3_dcjje"]
-[ext_resource type="PackedScene" uid="uid://cuwxm00nbnju0" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
+[ext_resource type="PackedScene" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 

@@ -15,5 +15,7 @@ namespace FlightSpeedway
         }
 
         public void EmitRingKilled() => EmitSignal(SignalName.RingKilled);
+
+        public void EmitLevelReset() => EmitSignal(SignalName.LevelReset);
     }
 }

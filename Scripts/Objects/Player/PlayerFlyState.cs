@@ -3,7 +3,7 @@ using System;
 
 namespace FlightSpeedway
 {
-    public partial class Player : CharacterBody3D
+    public partial class PlayerFlyState : PlayerState
     {
         [Export] public float MaxPitchDegrees = 90;
         [Export] public float MinPitchDegrees = -90;
@@ -26,9 +26,6 @@ namespace FlightSpeedway
         public float YawRad { get; private set; }
         public float Speed { get; private set; }
 
-
-        private Node3D _model => GetNode<Node3D>("%Model");
-
         private float _maxPitchRad => Mathf.DegToRad(MaxPitchDegrees);
         private float _minPitchRad => Mathf.DegToRad(MinPitchDegrees);
         private float _maxPitchRotSpeedRad => Mathf.DegToRad(PitchRotSpeedDegrees);
@@ -39,6 +36,20 @@ namespace FlightSpeedway
         private float _pitchRotSpeedRad;
         private float _yawRotSpeedRad;
 
+        public override void _Ready()
+        {
+            _player.Respawning += OnRespawning;
+        }
+
+        public void OnRespawning()
+        {
+            PitchRad = 0;
+            YawRad = 0;
+            Speed = MinFlySpeed;
+
+            _pitchRotSpeedRad = 0;
+            _yawRotSpeedRad = 0;
+        }
 
         public override void _PhysicsProcess(double deltaD)
         {
@@ -52,10 +63,10 @@ namespace FlightSpeedway
                 .Rotated(Vector3.Right, PitchRad)
                 .Rotated(Vector3.Up, YawRad);
 
-            Velocity = Speed * forward;
-            Rotation = new Vector3(PitchRad, YawRad, 0);
+            _player.Velocity = Speed * forward;
+            _player.Rotation = new Vector3(PitchRad, YawRad, 0);
 
-            MoveAndSlide();
+            _player.MoveAndSlide();
         }
 
         public override void _Process(double deltaD)
@@ -68,7 +79,7 @@ namespace FlightSpeedway
                 Mathf.Lerp(0, ModelMaxRollDegrees, -LeftStick().X)
             );
 
-            _model.RotationDegrees = DecayToward(
+            _model.RotationDegrees = MathUtils.DecayToward(
                 _model.RotationDegrees,
                 targetModelRot,
                 ModelRotDecayRate,
@@ -109,13 +120,6 @@ namespace FlightSpeedway
 
             Speed += accel * delta;
             Speed = Mathf.Clamp(Speed, MinFlySpeed, MaxFlySpeed);
-        }
-
-        private Vector3 DecayToward(Vector3 from, Vector3 to, float decayRate, float delta)
-        {
-            float remaining = from.DistanceTo(to);
-            remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
-            return to.MoveToward(from, remaining);
         }
 
         private static Vector2 LeftStick() => InputService.LeftStick;

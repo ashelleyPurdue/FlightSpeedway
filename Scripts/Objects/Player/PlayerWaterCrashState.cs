@@ -4,6 +4,8 @@ namespace FlightSpeedway
 {
     public partial class PlayerWaterCrashState : PlayerState
     {
+        [Export] public CollisionShape3D Collider;
+
         [Export] public double Duration = 2;
         [Export] public float HSpeedDecayRate = 5;
         [Export] public float VerticalSpringConstant = 20;
@@ -18,6 +20,20 @@ namespace FlightSpeedway
         {
             _timer = Duration;
             _targetY = _player.Position.Y;
+
+            Collider.SetDeferred("disabled", true);
+
+            var rot = _player.RotationDegrees;
+            rot.X = 0;
+            _player.RotationDegrees = rot;
+        }
+
+        public override void OnStateExited()
+        {
+            _timer = Duration;
+            _targetY = _player.Position.Y;
+
+            Collider.SetDeferred("disabled", false);
 
             var rot = _player.RotationDegrees;
             rot.X = 0;

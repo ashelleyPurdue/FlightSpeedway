@@ -76,8 +76,9 @@ script = ExtResource("1_yrsdm")
 [node name="PlayerFlyState" type="Node" parent="."]
 script = ExtResource("2_ra6ri")
 
-[node name="PlayerWaterCrashState" type="Node" parent="."]
+[node name="PlayerWaterCrashState" type="Node" parent="." node_paths=PackedStringArray("Collider")]
 script = ExtResource("3_r6rkq")
+Collider = NodePath("../CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

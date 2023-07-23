@@ -5,7 +5,7 @@ namespace FlightSpeedway
     public partial class PlayerWaterCrashState : PlayerState
     {
         [Export] public double Duration = 2;
-        [Export] public float HSpeedDecayRate = 0.95f;
+        [Export] public float HSpeedDecayRate = 5;
         [Export] public float VerticalSpringConstant = 20;
         [Export] public float VerticalSpringDamping = 0.95f;
 
@@ -57,10 +57,12 @@ namespace FlightSpeedway
         {
             Vector3 flatVel = _player.Velocity;
             flatVel.Y = 0;
-
-            float hspeed = flatVel.Length();
-            hspeed = MathUtils.DecayToward(hspeed, 0, HSpeedDecayRate, delta);
-            flatVel = flatVel.Normalized() * hspeed;
+            flatVel = MathUtils.DecayToward(
+                flatVel,
+                Vector3.Zero,
+                HSpeedDecayRate,
+                delta
+            );
 
             _player.Velocity = flatVel + (Vector3.Up * _player.Velocity.Y);
         }

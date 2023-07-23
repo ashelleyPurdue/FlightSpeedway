@@ -12,7 +12,7 @@ namespace FlightSpeedway
         {
             float remaining = Mathf.Abs(from - to);
             remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
-            return Mathf.MoveToward(from, to, remaining);
+            return Mathf.MoveToward(to, from, remaining);
         }
 
         public static Vector3 DecayToward(
@@ -23,7 +23,7 @@ namespace FlightSpeedway
         )
         {
             float remaining = from.DistanceTo(to);
-            remaining = DecayToward(remaining, 0, decayRate, 0);
+            remaining *= Mathf.Pow(Mathf.E, -decayRate * delta);
             return to.MoveToward(from, remaining);
         }
     }

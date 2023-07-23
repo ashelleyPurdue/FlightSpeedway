@@ -11,7 +11,7 @@ namespace FlightSpeedway
 
         private void OnBodyEntered(Node3D body)
         {
-            if (body is Player p)
+            if (body is Player p && !p.PretendColliderDisabled)
                 p.ChangeState<PlayerWaterCrashState>();
         }
     }

@@ -36,17 +36,13 @@ namespace FlightSpeedway
         private float _pitchRotSpeedRad;
         private float _yawRotSpeedRad;
 
-        private Vector3 _spawnPoint;
-
         public override void _Ready()
         {
             _player.Respawning += OnRespawning;
-            _spawnPoint = _player.Position;
         }
 
         public void OnRespawning()
         {
-            _player.Position = _spawnPoint;
             PitchRad = 0;
             YawRad = 0;
             Speed = MinFlySpeed;

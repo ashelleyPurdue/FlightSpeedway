@@ -9,22 +9,34 @@ namespace FlightSpeedway
     {
         [Signal] public delegate void RespawningEventHandler();
 
+        /// <summary>
+        ///     Disabling collision shapes infamously can't happen in a
+        ///     collision handler, which is inconvenient.
+        ///     Here's a shitty workaround.
+        /// </summary>
+        public bool PretendColliderDisabled {get; set;}
+
         private PlayerState _currentState;
+        private Vector3 _spawnPoint;
 
         public override void _Ready()
         {
             SignalBus.Instance.LevelReset += Respawn;
+            _spawnPoint = Position;
+
             Respawn();
         }
 
         public void Respawn()
         {
             EmitSignal(SignalName.Respawning);
+            Position = _spawnPoint;
             ChangeState<PlayerFlyState>();
         }
 
         public void ChangeState<TState>() where TState : PlayerState
         {
+            GD.Print($"Changing state to {typeof(TState).Name}");
             _currentState?.OnStateExited();
 
             foreach (var state in States())

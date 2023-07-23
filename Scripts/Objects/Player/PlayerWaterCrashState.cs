@@ -21,7 +21,7 @@ namespace FlightSpeedway
             _timer = Duration;
             _targetY = _player.Position.Y;
 
-            Collider.SetDeferred("disabled", true);
+            _player.PretendColliderDisabled = true;
 
             var rot = _player.RotationDegrees;
             rot.X = 0;
@@ -30,14 +30,8 @@ namespace FlightSpeedway
 
         public override void OnStateExited()
         {
-            _timer = Duration;
-            _targetY = _player.Position.Y;
-
-            Collider.SetDeferred("disabled", false);
-
-            var rot = _player.RotationDegrees;
-            rot.X = 0;
-            _player.RotationDegrees = rot;
+            _player.PretendColliderDisabled = false;
+            _player.Velocity = Vector3.Zero;
         }
 
         public override void _PhysicsProcess(double deltaD)

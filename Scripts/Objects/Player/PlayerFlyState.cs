@@ -51,6 +51,12 @@ namespace FlightSpeedway
             _yawRotSpeedRad = 0;
         }
 
+        public override void _Input(InputEvent ev)
+        {
+            if (ev.IsActionPressed("Flame"))
+                GetNode<PlayerFlame>("%Flame").Flame();
+        }
+
         public override void _PhysicsProcess(double deltaD)
         {
             float delta = (float)deltaD;

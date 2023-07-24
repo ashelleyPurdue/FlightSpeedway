@@ -23,7 +23,7 @@ namespace FlightSpeedway
             if (_currentState != State.Ready)
                 return;
 
-            _currentState = State.Ready;
+            _currentState = State.Flaming;
             _timer = FlameDuration;
             Collider.Disabled = false;
             Visible = true;

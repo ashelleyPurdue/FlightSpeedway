@@ -157,6 +157,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Flame" type="Area3D" parent="." node_paths=PackedStringArray("Collider")]
+unique_name_in_owner = true
 visible = false
 script = ExtResource("4_ldrvq")
 Collider = NodePath("CollisionShape3D")

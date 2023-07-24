@@ -36,6 +36,8 @@ namespace FlightSpeedway
         private float _pitchRotSpeedRad;
         private float _yawRotSpeedRad;
 
+        private PlayerFlame _flame => GetNode<PlayerFlame>("%Flame");
+
         public override void _Ready()
         {
             _player.Respawning += OnRespawning;
@@ -53,8 +55,8 @@ namespace FlightSpeedway
 
         public override void _Input(InputEvent ev)
         {
-            if (ev.IsActionPressed("Flame"))
-                GetNode<PlayerFlame>("%Flame").Flame();
+            if (InputService.FlameJustPressed(ev))
+                _flame.Flame();
         }
 
         public override void _PhysicsProcess(double deltaD)

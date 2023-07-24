@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://cdyx04vwy1cd"]
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
-[ext_resource type="Script" path="res://Scripts/Objects/RingPath.cs" id="2_g4vro"]
+[ext_resource type="Script" path="res://Scripts/Objects/RingPath.gd" id="2_laqnr"]
 [ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scenes/Objects/Ring.tscn" id="3_dcjje"]
-[ext_resource type="PackedScene" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
+[ext_resource type="PackedScene" uid="uid://cuwxm00nbnju0" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 
@@ -64,7 +64,7 @@ size = Vector3(100, 15, 100)
 [node name="RingPath" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 17.8811, 24.86)
 curve = SubResource("Curve3D_ppicx")
-script = ExtResource("2_g4vro")
+script = ExtResource("2_laqnr")
 RingPrefab = ExtResource("3_dcjje")
 RingCount = 8
 

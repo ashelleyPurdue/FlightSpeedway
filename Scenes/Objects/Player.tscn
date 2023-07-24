@@ -7,6 +7,12 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_eh7oa"]
+size = Vector3(2.18458, 1, 2.16102)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_o8vd5"]
+top_radius = 0.0
+
 [sub_resource type="Gradient" id="Gradient_thpy4"]
 interpolation_mode = 2
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -68,12 +74,6 @@ func _process(delta):
     $'./Pitch'.text = str(rad_to_deg($'../PlayerFlyState'.PitchRad))
 "
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_eh7oa"]
-size = Vector3(2.18458, 1, 2.16102)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_o8vd5"]
-top_radius = 0.0
-
 [node name="Player" type="CharacterBody3D"]
 disable_mode = 2
 input_ray_pickable = false
@@ -94,6 +94,22 @@ shape = SubResource("SphereShape3D_wfdmf")
 [node name="Model" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Flame" type="Area3D" parent="Model" node_paths=PackedStringArray("Collider")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+script = ExtResource("4_ldrvq")
+Collider = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Flame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885191, -1.39657)
+shape = SubResource("BoxShape3D_eh7oa")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Flame"]
+transform = Transform3D(2.23403, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.880004, -1.48698)
+mesh = SubResource("CylinderMesh_o8vd5")
 
 [node name="LeftWingParticles" type="CPUParticles3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.325, 0, 0.338)
@@ -155,18 +171,3 @@ layout_mode = 2
 
 [node name="Pitch" type="Label" parent="DebugStats"]
 layout_mode = 2
-
-[node name="Flame" type="Area3D" parent="." node_paths=PackedStringArray("Collider")]
-unique_name_in_owner = true
-visible = false
-script = ExtResource("4_ldrvq")
-Collider = NodePath("CollisionShape3D")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Flame"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885191, -1.39657)
-shape = SubResource("BoxShape3D_eh7oa")
-disabled = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Flame"]
-transform = Transform3D(2.23403, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.880004, -1.48698)
-mesh = SubResource("CylinderMesh_o8vd5")

@@ -5,8 +5,8 @@ namespace FlightSpeedway
     public partial class PlayerFlame : Area3D
     {
         [Export] public CollisionShape3D Collider;
-        [Export] public double FlameDuration = 1;
-        [Export] public double Cooldown = 1;
+        [Export] public double FlameDuration = 0.4;
+        [Export] public double Cooldown = 0.4;
 
         private double _timer;
 

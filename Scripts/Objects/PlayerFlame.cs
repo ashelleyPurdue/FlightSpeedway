@@ -5,6 +5,7 @@ namespace FlightSpeedway
     public partial class PlayerFlame : Area3D
     {
         [Export] public CollisionShape3D Collider;
+        [Export] public GpuParticles3D Particles;
         [Export] public double FlameDuration = 0.4;
         [Export] public double Cooldown = 0.4;
 
@@ -26,7 +27,7 @@ namespace FlightSpeedway
             _currentState = State.Flaming;
             _timer = FlameDuration;
             Collider.Disabled = false;
-            Visible = true;
+            Particles.Emitting = true;
         }
 
         public override void _Process(double delta)
@@ -38,7 +39,7 @@ namespace FlightSpeedway
                     _timer -= delta;
                     if (_timer <= 0)
                     {
-                        Visible = false;
+                        Particles.Emitting = false;
                         Collider.Disabled = true;
                         _currentState = State.CoolingDown;
                         _timer = Cooldown;

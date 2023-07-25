@@ -31,13 +31,10 @@ namespace FlightSpeedway
 
             _currentState = State.Flaming;
             _timer = FlameDuration;
-
             _collider.Disabled = false;
-            _particles.Emitting = true;
-            _lightTargetEnergy = 1;
         }
 
-        public override void _Process(double delta)
+        public override void _PhysicsProcess(double delta)
         {
             switch (_currentState)
             {
@@ -48,10 +45,7 @@ namespace FlightSpeedway
                     {
                         _currentState = State.CoolingDown;
                         _timer = Cooldown;
-
                         _collider.Disabled = true;
-                        _particles.Emitting = false;
-                        _lightTargetEnergy = 0;
                     }
                     break;
                 }
@@ -66,6 +60,14 @@ namespace FlightSpeedway
                     break;
                 }
             }
+        }
+
+        public override void _Process(double delta)
+        {
+            _particles.Emitting = _currentState == State.Flaming;
+            _lightTargetEnergy = _currentState == State.Flaming
+                ? 1
+                : 0;
 
             _light.LightEnergy = Mathf.MoveToward(
                 _light.LightEnergy,

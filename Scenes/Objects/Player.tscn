@@ -145,27 +145,34 @@ shape = SubResource("SphereShape3D_wfdmf")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="Flame" type="Area3D" parent="Model" node_paths=PackedStringArray("Collider", "Particles")]
+[node name="Flame" type="Area3D" parent="Model"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 script = ExtResource("4_ldrvq")
-Collider = NodePath("CollisionShape3D")
-Particles = NodePath("FlameParticles")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Flame"]
+[node name="FlameCollisionShape" type="CollisionShape3D" parent="Model/Flame"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885191, -1.39657)
 shape = SubResource("BoxShape3D_eh7oa")
 disabled = true
 
 [node name="FlameParticles" type="GPUParticles3D" parent="Model/Flame"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.908663, -0.733055)
 cast_shadow = 0
 emitting = false
 amount = 200
+lifetime = 0.4
 local_coords = true
 draw_order = 1
 process_material = SubResource("ParticleProcessMaterial_krxly")
 draw_pass_1 = SubResource("PlaneMesh_40wqw")
+
+[node name="FlameLight" type="OmniLight3D" parent="Model/Flame"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00816, -1.58563)
+light_color = Color(1, 0.552941, 0, 1)
+light_energy = 0.0
 
 [node name="LeftWingParticles" type="CPUParticles3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.325, 0, 0.338)

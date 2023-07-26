@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://btua4amycjalp"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/FlamableChest.cs" id="1_uswe7"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_co2oh"]
+[ext_resource type="PackedScene" uid="uid://cpcf4352ulbre" path="res://Models/FlammableChest.gltf" id="2_uwg2c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pugro"]
+size = Vector3(1.5, 1, 1.5)
 
 [node name="FlamableChest" type="StaticBody3D"]
 script = ExtResource("1_uswe7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_co2oh")
-
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_pugro")
+
+[node name="FlammableChest" parent="." instance=ExtResource("2_uwg2c")]

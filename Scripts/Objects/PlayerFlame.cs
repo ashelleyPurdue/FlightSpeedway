@@ -24,6 +24,11 @@ namespace FlightSpeedway
         }
         private State _currentState = State.Ready;
 
+        public override void _Ready()
+        {
+            BodyEntered += OnBodyEntered;
+        }
+
         public void Flame()
         {
             if (_currentState != State.Ready)
@@ -74,6 +79,12 @@ namespace FlightSpeedway
                 _lightTargetEnergy,
                 _lightEnergyChangeSpeed * (float)delta
             );
+        }
+
+        private void OnBodyEntered(Node3D body)
+        {
+            if (body is IFlamable flamable)
+                flamable.OnFlamed();
         }
     }
 }

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdyx04vwy1cd"]
+[gd_scene load_steps=10 format=3 uid="uid://cdyx04vwy1cd"]
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
 [ext_resource type="Script" path="res://Scripts/Objects/RingPath.gd" id="2_laqnr"]
 [ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scenes/Objects/Ring.tscn" id="3_dcjje"]
 [ext_resource type="PackedScene" uid="uid://cuwxm00nbnju0" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
+[ext_resource type="PackedScene" uid="uid://btua4amycjalp" path="res://Scenes/Objects/FlamableChest.tscn" id="5_fsitg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 
@@ -69,3 +70,12 @@ RingPrefab = ExtResource("3_dcjje")
 RingCount = 8
 
 [node name="WaterPlane" parent="." instance=ExtResource("4_5wk7w")]
+
+[node name="FlamableChest" parent="." instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.29723, 12.4038, 14.8215)
+
+[node name="FlamableChest2" parent="." instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40515, 12.4038, 14.1344)
+
+[node name="FlamableChest3" parent="." instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.233397, 15.5902, 0.403328)

@@ -7,8 +7,8 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_eh7oa"]
-size = Vector3(2.18458, 1, 2.16102)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ametg"]
+points = PackedVector3Array(0, 0, 0, -2.2, -0.5, -3, -2.2, 0.5, -3, 0, -0.5, -4.5, 0, 0.5, -4.5, 2.2, -0.5, -3, 2.2, 0.5, -3)
 
 [sub_resource type="Gradient" id="Gradient_4tevu"]
 offsets = PackedFloat32Array(0, 0.69863, 1)
@@ -33,7 +33,7 @@ initial_velocity_max = 15.0
 linear_accel_min = -30.0
 linear_accel_max = -30.0
 scale_min = 1.5
-scale_max = 2.0
+scale_max = 3.0
 scale_curve = SubResource("CurveTexture_gyejd")
 color_ramp = SubResource("GradientTexture1D_akdth")
 
@@ -152,15 +152,14 @@ script = ExtResource("4_ldrvq")
 
 [node name="FlameCollisionShape" type="CollisionShape3D" parent="Model/Flame"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885191, -1.39657)
-shape = SubResource("BoxShape3D_eh7oa")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.909, -0.5)
+shape = SubResource("ConvexPolygonShape3D_ametg")
 disabled = true
 
 [node name="FlameParticles" type="GPUParticles3D" parent="Model/Flame"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.908663, -0.733055)
+transform = Transform3D(0.646, 0, 0, 0, 0.646, 0, 0, 0, 1, 0, 0.908663, -0.733055)
 cast_shadow = 0
-emitting = false
 amount = 200
 lifetime = 0.4
 local_coords = true

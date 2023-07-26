@@ -31,7 +31,6 @@ namespace FlightSpeedway
 
             _currentState = State.Flaming;
             _timer = FlameDuration;
-            _collider.Disabled = false;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -45,7 +44,6 @@ namespace FlightSpeedway
                     {
                         _currentState = State.CoolingDown;
                         _timer = Cooldown;
-                        _collider.Disabled = true;
                     }
                     break;
                 }
@@ -60,6 +58,8 @@ namespace FlightSpeedway
                     break;
                 }
             }
+
+            _collider.Disabled = _currentState != State.Flaming;
         }
 
         public override void _Process(double delta)

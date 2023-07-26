@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://btua4amycjalp"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/FlamableChest.cs" id="1_uswe7"]
-[ext_resource type="PackedScene" uid="uid://cpcf4352ulbre" path="res://Models/FlammableChest.gltf" id="2_uwg2c"]
+[ext_resource type="PackedScene" uid="uid://dil7tq7oj2yad" path="res://Models/FlamableChest.blend" id="2_ephua"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pugro"]
 size = Vector3(1.5, 1, 1.5)
@@ -14,4 +14,4 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_pugro")
 
-[node name="FlammableChest" parent="." instance=ExtResource("2_uwg2c")]
+[node name="FlamableChest" parent="." instance=ExtResource("2_ephua")]

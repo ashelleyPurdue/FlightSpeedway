@@ -9,5 +9,8 @@ namespace FlightSpeedway
             Input.GetAxis("LeftStickLeft", "LeftStickRight"),
             Input.GetAxis("LeftStickDown", "LeftStickUp")
         );
+
+        public static bool FlameJustPressed(InputEvent ev)
+            => ev.IsActionPressed("Flame");
     }
 }

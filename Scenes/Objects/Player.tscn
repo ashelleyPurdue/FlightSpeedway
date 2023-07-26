@@ -1,10 +1,67 @@
-[gd_scene load_steps=16 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=27 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player/Player.cs" id="1_yrsdm"]
 [ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerFlyState.cs" id="2_ra6ri"]
 [ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerWaterCrashState.cs" id="3_r6rkq"]
+[ext_resource type="Script" path="res://Scripts/Objects/PlayerFlame.cs" id="4_ldrvq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ametg"]
+points = PackedVector3Array(0, 0, 0, -2.2, -0.5, -3, -2.2, 0.5, -3, 0, -0.5, -4.5, 0, 0.5, -4.5, 2.2, -0.5, -3, 2.2, 0.5, -3)
+
+[sub_resource type="Gradient" id="Gradient_4tevu"]
+offsets = PackedFloat32Array(0, 0.69863, 1)
+colors = PackedColorArray(1, 0.462745, 0, 1, 0.0214346, 0.0214346, 0.0214346, 1, 0.0196078, 0.0196078, 0.0196078, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_akdth"]
+gradient = SubResource("Gradient_4tevu")
+
+[sub_resource type="Curve" id="Curve_nrcns"]
+_data = [Vector2(0, 0.357895), 0.0, 0.0, 0, 0, Vector2(0.996, 1.07368), 2.22672, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gyejd"]
+curve = SubResource("Curve_nrcns")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_krxly"]
+direction = Vector3(0, 0, -1)
+flatness = 0.83
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+linear_accel_min = -30.0
+linear_accel_max = -30.0
+scale_min = 1.5
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_gyejd")
+color_ramp = SubResource("GradientTexture1D_akdth")
+
+[sub_resource type="Gradient" id="Gradient_u1ne4"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.232227, 0.63981)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nndwb"]
+gradient = SubResource("Gradient_u1ne4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj3pf"]
+render_priority = 1
+transparency = 1
+diffuse_mode = 3
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_nndwb")
+emission_operator = 1
+rim_enabled = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_40wqw"]
+material = SubResource("StandardMaterial3D_xj3pf")
+size = Vector2(1, 1)
+orientation = 2
 
 [sub_resource type="Gradient" id="Gradient_thpy4"]
 interpolation_mode = 2
@@ -88,6 +145,34 @@ shape = SubResource("SphereShape3D_wfdmf")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
+[node name="Flame" type="Area3D" parent="Model"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+script = ExtResource("4_ldrvq")
+
+[node name="FlameCollisionShape" type="CollisionShape3D" parent="Model/Flame"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.909, -0.5)
+shape = SubResource("ConvexPolygonShape3D_ametg")
+disabled = true
+
+[node name="FlameParticles" type="GPUParticles3D" parent="Model/Flame"]
+unique_name_in_owner = true
+transform = Transform3D(0.646, 0, 0, 0, 0.646, 0, 0, 0, 1, 0, 0.908663, -0.733055)
+cast_shadow = 0
+amount = 200
+lifetime = 0.4
+local_coords = true
+draw_order = 1
+process_material = SubResource("ParticleProcessMaterial_krxly")
+draw_pass_1 = SubResource("PlaneMesh_40wqw")
+
+[node name="FlameLight" type="OmniLight3D" parent="Model/Flame"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00816, -1.58563)
+light_color = Color(1, 0.552941, 0, 1)
+light_energy = 0.0
+
 [node name="LeftWingParticles" type="CPUParticles3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.325, 0, 0.338)
 cast_shadow = 0
@@ -138,6 +223,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
 
 [node name="DebugStats" type="VBoxContainer" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = SubResource("GDScript_7sya3")

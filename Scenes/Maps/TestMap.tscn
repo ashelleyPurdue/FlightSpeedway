@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdyx04vwy1cd"]
+[gd_scene load_steps=11 format=3 uid="uid://cdyx04vwy1cd"]
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
 [ext_resource type="Script" path="res://Scripts/Objects/RingPath.gd" id="2_laqnr"]
 [ext_resource type="PackedScene" uid="uid://bt22ryks838qb" path="res://Scenes/Objects/Ring.tscn" id="3_dcjje"]
 [ext_resource type="PackedScene" uid="uid://cuwxm00nbnju0" path="res://Scenes/Objects/WaterPlane.tscn" id="4_5wk7w"]
+[ext_resource type="PackedScene" uid="uid://btua4amycjalp" path="res://Scenes/Objects/FlamableChest.tscn" id="5_fsitg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_77clq"]
 
@@ -17,23 +18,32 @@ ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Curve3D" id="Curve3D_ppicx"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.946041, -3.24249e-05, 11.4384, 0, 0, 0, 0, 0, 0, 0.285453, -3.41139, -1.11348, 0, 0, 0, 0, 0, 0, -12.0705, -6.18129, -12.6457, 0, 0, 0, 0, 0, 0, -31.7205, -10.0254, -22.0348, 0, 0, 0, 0, 0, 0, -36.8483, -8.65254, -54.0229, 0, 0, 0, 0, 0, 0, -17.6663, -6.18135, -75.8518, 0, 0, 0, 0, 0, 0, 14.6204, -3.24249e-05, -79.154, 0, 0, 0, 0, 0, 0, 44.0581, 1.64408, -61.2992, 0, 0, 0, 0, 0, 0, 55.8333, 3.01696, -32.8806),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.946041, -3.24249e-05, 11.4384, 0, 0, 0, 0, 0, 0, 0.285453, -3.41139, -1.11348, 0, 0, 0, 0, 0, 0, -12.0705, -6.18129, -12.6457, 0, 0, 0, 0, 0, 0, -31.7205, -10.0254, -22.0348, 0, 0, 0, 0, 0, 0, -36.8483, -11.2402, -54.7213, 0, 0, 0, 0, 0, 0, -17.6663, -6.18135, -75.8518, 0, 0, 0, 0, 0, 0, 14.6204, -3.24249e-05, -79.154, 0, 0, 0, 0, 0, 0, 44.3705, 9.32697, -50.5631, 0, 0, 0, 0, 0, 0, 52.1892, 9.64273, -37.9425),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 9
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1t7eq"]
 
 [node name="TestMap" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ourdv")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 0, 0)
+light_angular_distance = 7.35
+
 [node name="Player" parent="." instance=ExtResource("1_r6xxd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.7085, 49.5115)
 
 [node name="CentralPillar" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -26.3518, 7.5, 60.6482)
 use_collision = true
 height = 15.0
+
+[node name="FlamableChest" parent="CentralPillar" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
 
 [node name="Pillar" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 7.5, -50)
@@ -41,25 +51,20 @@ use_collision = true
 height = 15.0
 
 [node name="Pillar2" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 7.5, 50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 7.5, 74)
 use_collision = true
 height = 15.0
 
-[node name="Pillar3" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, 50)
-use_collision = true
-height = 15.0
+[node name="FlamableChest" parent="Pillar2" instance=ExtResource("5_fsitg")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 7, 0)
 
 [node name="Pillar4" type="CSGCylinder3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, -50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 1.5, 0)
 use_collision = true
 height = 15.0
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="FlamableChest" parent="Pillar4" instance=ExtResource("5_fsitg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
-visible = false
-flip_faces = true
-size = Vector3(100, 15, 100)
 
 [node name="RingPath" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 17.8811, 24.86)
@@ -69,3 +74,93 @@ RingPrefab = ExtResource("3_dcjje")
 RingCount = 8
 
 [node name="WaterPlane" parent="." instance=ExtResource("4_5wk7w")]
+
+[node name="Ceiling" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 35.9092, 0)
+shape = SubResource("WorldBoundaryShape3D_1t7eq")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, -19)
+use_collision = true
+size = Vector3(67, 44, 10)
+
+[node name="ChestOnPlatform" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 7, -22.5)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="ChestOnPlatform" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 60, 12, 49)
+use_collision = true
+size = Vector3(30, 25, 30)
+
+[node name="ChestOnPlatform2" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, -7.988, -8.48501)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D2/ChestOnPlatform2" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="ChestOnPlatform3" type="CSGBox3D" parent="CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, -1.988, 10.515)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D2/ChestOnPlatform3" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 64.2868, 12, 114.38)
+use_collision = true
+size = Vector3(30, 25, 30)
+
+[node name="ChestOnPlatform2" type="CSGBox3D" parent="CSGBox3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, 5, -8.48499)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D5/ChestOnPlatform2" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="ChestOnPlatform3" type="CSGBox3D" parent="CSGBox3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, 5, 10.515)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D5/ChestOnPlatform3" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 127.823, 12, 75.7317)
+use_collision = true
+size = Vector3(62.1222, 25, 30)
+
+[node name="ChestOnPlatform3" type="CSGBox3D" parent="CSGBox3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2, -16.5)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D3/ChestOnPlatform3" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="ChestOnPlatform4" type="CSGBox3D" parent="CSGBox3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 5, -16.5)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="CSGBox3D3/ChestOnPlatform4" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 124.204, 12, 40.7776)
+use_collision = true
+size = Vector3(30, 25, 30)
+
+[node name="FlamableChest2" parent="." instance=ExtResource("5_fsitg")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -50, 15, -50)

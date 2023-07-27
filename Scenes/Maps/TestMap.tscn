@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdyx04vwy1cd"]
+[gd_scene load_steps=11 format=3 uid="uid://cdyx04vwy1cd"]
 
 [ext_resource type="PackedScene" uid="uid://diobf180u0eui" path="res://Scenes/Objects/Player.tscn" id="1_r6xxd"]
 [ext_resource type="Script" path="res://Scripts/Objects/RingPath.gd" id="2_laqnr"]
@@ -22,6 +22,8 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 9
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1t7eq"]
 
 [node name="TestMap" type="Node3D"]
 
@@ -56,12 +58,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, -50)
 use_collision = true
 height = 15.0
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
-visible = false
-flip_faces = true
-size = Vector3(100, 15, 100)
-
 [node name="RingPath" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.712162, 17.8811, 24.86)
 curve = SubResource("Curve3D_ppicx")
@@ -71,11 +67,25 @@ RingCount = 8
 
 [node name="WaterPlane" parent="." instance=ExtResource("4_5wk7w")]
 
-[node name="FlamableChest" parent="." instance=ExtResource("5_fsitg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.29723, 12.4038, 14.8215)
+[node name="Ceiling" type="StaticBody3D" parent="."]
 
-[node name="FlamableChest2" parent="." instance=ExtResource("5_fsitg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40515, 12.4038, 14.1344)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 35.9092, 0)
+shape = SubResource("WorldBoundaryShape3D_1t7eq")
 
-[node name="FlamableChest3" parent="." instance=ExtResource("5_fsitg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.233397, 15.5902, 0.403328)
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, -19)
+use_collision = true
+size = Vector3(67, 44, 10)
+
+[node name="ChestOnPlatform" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 7, -16)
+use_collision = true
+size = Vector3(3, 1, 3)
+
+[node name="FlamableChest" parent="ChestOnPlatform" instance=ExtResource("5_fsitg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.800794, 0, 0.59894, 0, 1, 0, -0.59894, 0, 0.800794, 34, 12, 62)
+size = Vector3(60, 25, 60)

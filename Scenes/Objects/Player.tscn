@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=28 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player/Player.cs" id="1_yrsdm"]
+[ext_resource type="PackedScene" uid="uid://cdebre2hwaijl" path="res://Scenes/UI/PauseMenu.tscn" id="2_2ru8o"]
 [ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerFlyState.cs" id="2_ra6ri"]
 [ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerWaterCrashState.cs" id="3_r6rkq"]
 [ext_resource type="Script" path="res://Scripts/Objects/PlayerFlame.cs" id="4_ldrvq"]
@@ -220,6 +221,9 @@ skeleton = NodePath("../../..")
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_2ru8o")]
+process_mode = 3
 
 [node name="DebugStats" type="VBoxContainer" parent="."]
 visible = false

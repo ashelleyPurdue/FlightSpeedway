@@ -12,5 +12,8 @@ namespace FlightSpeedway
 
         public static bool FlameJustPressed(InputEvent ev)
             => ev.IsActionPressed("Flame");
+
+        public static bool PauseJustPressed(InputEvent ev)
+            => ev.IsActionPressed("Pause");
     }
 }

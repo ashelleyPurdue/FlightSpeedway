@@ -4,8 +4,6 @@ namespace FlightSpeedway
 {
     public partial class PlayerWaterCrashState : PlayerState
     {
-        [Export] public CollisionShape3D Collider;
-
         [Export] public double Duration = 2;
         [Export] public float HSpeedDecayRate = 5;
         [Export] public float VerticalSpringConstant = 20;

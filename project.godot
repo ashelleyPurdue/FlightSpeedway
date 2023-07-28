@@ -78,6 +78,11 @@ Pause={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Default"
+3d_physics/layer_2="ShadowOnly"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

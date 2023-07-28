@@ -19,3 +19,9 @@ mesh = SubResource("PlaneMesh_kgd2o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("WorldBoundaryShape3D_pgyoa")
+
+[node name="BlobShadowCollider" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlobShadowCollider"]
+shape = SubResource("WorldBoundaryShape3D_pgyoa")

@@ -164,7 +164,7 @@ shape = SubResource("SphereShape3D_wfdmf")
 
 [node name="ShadowRaycast" type="RayCast3D" parent="."]
 target_position = Vector3(0, -1000, 0)
-collide_with_areas = true
+collision_mask = 3
 script = SubResource("GDScript_btpfl")
 
 [node name="Shadow" type="Sprite3D" parent="."]

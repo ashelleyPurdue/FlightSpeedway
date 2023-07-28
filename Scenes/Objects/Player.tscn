@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://diobf180u0eui"]
+[gd_scene load_steps=31 format=3 uid="uid://diobf180u0eui"]
 
 [ext_resource type="Script" path="res://Scripts/Objects/Player/Player.cs" id="1_yrsdm"]
 [ext_resource type="PackedScene" uid="uid://cdebre2hwaijl" path="res://Scenes/UI/PauseMenu.tscn" id="2_2ru8o"]
@@ -7,6 +7,27 @@
 [ext_resource type="Script" path="res://Scripts/Objects/PlayerFlame.cs" id="4_ldrvq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wfdmf"]
+
+[sub_resource type="GDScript" id="GDScript_btpfl"]
+script/source = "extends RayCast3D
+
+func _physics_process(delta):
+    global_rotation_degrees = Vector3.ZERO
+    $'%Shadow'.global_position = get_collision_point()
+    $'%Shadow'.global_position.y += 0.01
+    $'%Shadow'.global_rotation_degrees.x = 90
+"
+
+[sub_resource type="Gradient" id="Gradient_w57t0"]
+offsets = PackedFloat32Array(0.522581, 0.683871)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t0h6e"]
+gradient = SubResource("Gradient_w57t0")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ametg"]
 points = PackedVector3Array(0, 0, 0, -2.2, -0.5, -3, -2.2, 0.5, -3, 0, -0.5, -4.5, 0, 0.5, -4.5, 2.2, -0.5, -3, 2.2, 0.5, -3)
@@ -140,6 +161,16 @@ script = ExtResource("3_r6rkq")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_wfdmf")
+
+[node name="ShadowRaycast" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1000, 0)
+collide_with_areas = true
+script = SubResource("GDScript_btpfl")
+
+[node name="Shadow" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.146932, 0)
+texture = SubResource("GradientTexture2D_t0h6e")
 
 [node name="Model" type="Node3D" parent="."]
 unique_name_in_owner = true

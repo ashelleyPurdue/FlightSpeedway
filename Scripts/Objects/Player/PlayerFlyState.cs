@@ -45,8 +45,8 @@ namespace FlightSpeedway
 
         public void OnRespawning()
         {
-            PitchRad = 0;
-            YawRad = 0;
+            PitchRad = _player.Rotation.X;
+            YawRad = _player.Rotation.Y;
             Speed = MinFlySpeed;
 
             _pitchRotSpeedRad = 0;

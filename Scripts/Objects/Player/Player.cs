@@ -18,11 +18,13 @@ namespace FlightSpeedway
 
         private PlayerState _currentState;
         private Vector3 _spawnPoint;
+        private Vector3 _spawnRotation;
 
         public override void _Ready()
         {
             SignalBus.Instance.LevelReset += Respawn;
             _spawnPoint = Position;
+            _spawnRotation = Rotation;
 
             Respawn();
         }
@@ -31,6 +33,7 @@ namespace FlightSpeedway
         {
             EmitSignal(SignalName.Respawning);
             Position = _spawnPoint;
+            Rotation = _spawnRotation;
             ChangeState<PlayerFlyState>();
         }
 

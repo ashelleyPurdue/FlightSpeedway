@@ -23,6 +23,10 @@ SignalBus="*res://Scripts/Services/SignalBus.cs"
 
 project/assembly_name="Flight Speedway"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/tbloader/plugin.cfg")
+
 [input]
 
 ui_accept={

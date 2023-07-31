@@ -12,9 +12,9 @@
 
 @SolidClass = area : "Area" []
 
-@PointClass base(Angle) size(-16 -40 -16, 16 40 16) color(147 112 219) = player : "Player" []
-@PointClass base(Angle) size(-1 -64 -64, 1 64 64) color(255 0 0) = ring : "Ring" []
-@PointClass base(Angle) size(-16 -16 0, 16 16 24) color(255 255 0) = flamableChest : "FlamableChest" []
+@PointClass base(Angle) size(-16 -40 -16, 16 40 16) color(147 112 219) = Player : "Player" []
+@PointClass base(Angle) size(-1 -64 -64, 1 64 64) color(255 0 0) = Ring : "Ring" []
+@PointClass base(Angle) size(-16 -16 0, 16 16 24) color(255 255 0) = FlamableChest : "FlamableChest" []
 
 @PointClass size(-4 -4 -4, 4 4 4) color(255 255 0) = light : "Light" [
 	range(float) : "Range" : 10

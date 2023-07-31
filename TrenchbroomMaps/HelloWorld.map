@@ -43,24 +43,24 @@
 }
 // entity 1
 {
-"classname" "player"
+"classname" "Player"
 "origin" "-816 1024 320"
 "angles" "0 0 0"
 }
 // entity 2
 {
-"classname" "ring"
+"classname" "Ring"
 "origin" "-447 1024 320"
 }
 // entity 3
 {
-"classname" "ring"
+"classname" "Ring"
 "origin" "48 399 320"
 "angles" "0 -90 0"
 }
 // entity 4
 {
-"classname" "ring"
+"classname" "Ring"
 "origin" "-63.5 927.134 336"
 "angles" "0 -60 0"
 }

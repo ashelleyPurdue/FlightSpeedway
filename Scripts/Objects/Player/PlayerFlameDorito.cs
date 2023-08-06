@@ -10,7 +10,7 @@ namespace FlightSpeedway
         private Light3D _light => GetNode<Light3D>("%Light");
 
         private bool _isActive = false;
-        private float _timeRemaining = 0;
+        private double _timeRemaining = 0;
         private float _speed;
 
         public override void _Ready()
@@ -18,11 +18,11 @@ namespace FlightSpeedway
             BodyEntered += OnBodyEntered;
         }
 
-        public void Start(float distance, float time)
+        public void Start(float distance, double time)
         {
             _isActive = true;
             _timeRemaining = time;
-            _speed = distance / time;
+            _speed = distance / (float)time;
 
             Position = Vector3.Zero;
 

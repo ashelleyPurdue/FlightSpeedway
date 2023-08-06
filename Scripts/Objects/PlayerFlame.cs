@@ -2,19 +2,13 @@ using Godot;
 
 namespace FlightSpeedway
 {
-    public partial class PlayerFlame : Area3D
+    public partial class PlayerFlame : Node3D
     {
         [Export] public double FlameDuration = 0.4;
         [Export] public double Cooldown = 0.4;
-
-        private CollisionShape3D _collider => GetNode<CollisionShape3D>("%FlameCollisionShape");
-        private GpuParticles3D _particles => GetNode<GpuParticles3D>("%FlameParticles");
-        private Light3D _light => GetNode<Light3D>("%FlameLight");
+        [Export] public float FlameDistance = 5;
 
         private double _timer;
-
-        private float _lightTargetEnergy = 0;
-        private float _lightEnergyChangeSpeed => 1f / ((float)FlameDuration / 2);
 
         private enum State
         {
@@ -24,11 +18,6 @@ namespace FlightSpeedway
         }
         private State _currentState = State.Ready;
 
-        public override void _Ready()
-        {
-            BodyEntered += OnBodyEntered;
-        }
-
         public void Flame()
         {
             if (_currentState != State.Ready)
@@ -36,6 +25,12 @@ namespace FlightSpeedway
 
             _currentState = State.Flaming;
             _timer = FlameDuration;
+
+            foreach (var child in GetChildren())
+            {
+                var dorito = (PlayerFlameDorito)child;
+                dorito.Start(FlameDistance, FlameDuration);
+            }
         }
 
         public override void _PhysicsProcess(double delta)
@@ -63,28 +58,6 @@ namespace FlightSpeedway
                     break;
                 }
             }
-
-            _collider.Disabled = _currentState != State.Flaming;
-        }
-
-        public override void _Process(double delta)
-        {
-            _particles.Emitting = _currentState == State.Flaming;
-            _lightTargetEnergy = _currentState == State.Flaming
-                ? 1
-                : 0;
-
-            _light.LightEnergy = Mathf.MoveToward(
-                _light.LightEnergy,
-                _lightTargetEnergy,
-                _lightEnergyChangeSpeed * (float)delta
-            );
-        }
-
-        private void OnBodyEntered(Node3D body)
-        {
-            if (body is IFlamable flamable)
-                flamable.OnFlamed();
         }
     }
 }

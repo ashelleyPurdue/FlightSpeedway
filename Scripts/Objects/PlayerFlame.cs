@@ -8,7 +8,7 @@ namespace FlightSpeedway
         [Export] public double Cooldown = 0.4;
         [Export] public float FlameDistance = 3;
         [Export] public float FlameAngleDeg = 45;
-        [Export] public int Rings = 3;
+        [Export] public int Rings = 2;
         [Export] public int DoritosPerRing = 5;
         [Export] public PackedScene DoritoPrefab;
 
@@ -27,14 +27,28 @@ namespace FlightSpeedway
             for (int i = 0; i < Rings; i++)
             {
                 float ringAngleDeg = (i + 1) * FlameAngleDeg / Rings;
-                CreateRing(ringAngleDeg, DoritosPerRing);
+                CreateRing(ringAngleDeg, DoritosPerRing, i);
             }
 
-            void CreateRing(float ringAngleDeg, int doritos)
+            // Put one more dorito in the very center
+            CreateDorito(0, 0);
+
+            void CreateRing(
+                float ringAngleDeg,
+                int doritos,
+                int ringIndex
+            )
             {
+                float degreesPerDorito = 360f / doritos;
+                float doritoAngleOffset = ringIndex % 2 == 0
+                    ? 0
+                    : degreesPerDorito / 2;
+
                 for (int i = 0; i < doritos; i++)
                 {
-                    CreateDorito(ringAngleDeg, i * 360f / doritos);
+                    float doritoAngleDeg = i * degreesPerDorito;
+                    doritoAngleDeg += doritoAngleOffset;
+                    CreateDorito(ringAngleDeg, doritoAngleDeg);
                 }
             }
 

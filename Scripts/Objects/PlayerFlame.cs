@@ -7,9 +7,9 @@ namespace FlightSpeedway
         [Export] public double FlameDuration = 0.4;
         [Export] public double Cooldown = 0.4;
         [Export] public float FlameDistance = 3;
-        [Export] public float FlameAngleDeg = 45f;
-        [Export] public int Rows = 3;
-        [Export] public int DoritosPerRow = 3;
+        [Export] public float FlameAngleDeg = 45;
+        [Export] public int Rings = 3;
+        [Export] public int DoritosPerRing = 5;
         [Export] public PackedScene DoritoPrefab;
 
         private double _timer;
@@ -24,35 +24,50 @@ namespace FlightSpeedway
 
         public override void _Ready()
         {
-            for (int r = 0; r < Rows; r++)
+            for (int i = 0; i < Rings; i++)
             {
-                float rowPercent = (float)r / Rows;
-                float maxYawDeg = FlameAngleDeg * Mathf.Sin(rowPercent * Mathf.Pi);
+                float ringAngleDeg = (i + 1) * FlameAngleDeg / Rings;
+                CreateRing(ringAngleDeg, DoritosPerRing);
+            }
 
-                float pitchDeg = Mathf.Lerp(
-                    -FlameAngleDeg / 2,
-                    FlameAngleDeg / 2,
-                    rowPercent
-                );
-
-                for (int d = 0; d < DoritosPerRow; d++)
+            void CreateRing(float ringAngleDeg, int doritos)
+            {
+                for (int i = 0; i < doritos; i++)
                 {
-                    float doritoPercent = (float)d / DoritosPerRow;
-                    float yawDeg = Mathf.Lerp(
-                        -maxYawDeg / 2,
-                        maxYawDeg / 2,
-                        doritoPercent
-                    );
-
-                    var dorito = DoritoPrefab.Instantiate<PlayerFlameDorito>();
-                    dorito.RotationDegrees = new Vector3(
-                        pitchDeg,
-                        yawDeg,
-                        0
-                    );
-
-                    AddChild(dorito);
+                    CreateDorito(ringAngleDeg, i * 360f / doritos);
                 }
+            }
+
+            void CreateDorito(float ringAngleDeg, float doritoAngleDeg)
+            {
+                var dorito = DoritoPrefab.Instantiate<PlayerFlameDorito>();
+                AddChild(dorito);
+
+                float ringAngleRad = Mathf.DegToRad(ringAngleDeg);
+                float doritoAngleRad = Mathf.DegToRad(doritoAngleDeg);
+
+                RotateAboutAxis(dorito, Vector3.Up, ringAngleRad);
+                RotateAboutAxis(dorito, Vector3.Forward, doritoAngleRad);
+            }
+
+            void RotateAboutAxis(Node3D node, Vector3 axis, float angleRad)
+            {
+                // TODO: Find a way to do this without creating a temporary
+                // holder node.
+                var oldParent = node.GetParent();
+                var holder = new Node3D();
+
+                oldParent.AddChild(holder);
+                oldParent.RemoveChild(node);
+                holder.AddChild(node);
+
+                holder.Rotate(axis, angleRad);
+                var globalRot = node.GlobalRotation;
+
+                holder.RemoveChild(node);
+                holder.QueueFree();
+                oldParent.AddChild(node);
+                node.GlobalRotation = globalRot;
             }
         }
 

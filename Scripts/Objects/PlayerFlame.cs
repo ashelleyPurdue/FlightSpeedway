@@ -12,15 +12,7 @@ namespace FlightSpeedway
         [Export] public int DoritosPerRing = 6;
         [Export] public PackedScene DoritoPrefab;
 
-        private double _timer;
-
-        private enum State
-        {
-            Ready,
-            Flaming,
-            CoolingDown
-        }
-        private State _currentState = State.Ready;
+        private double _cooldownTimer = 0;
 
         public override void _Ready()
         {
@@ -87,11 +79,10 @@ namespace FlightSpeedway
 
         public void Flame()
         {
-            if (_currentState != State.Ready)
+            if (_cooldownTimer > 0)
                 return;
 
-            _currentState = State.Flaming;
-            _timer = FlameDuration;
+            _cooldownTimer = FlameDuration + Cooldown;
 
             foreach (var child in GetChildren())
             {
@@ -102,29 +93,8 @@ namespace FlightSpeedway
 
         public override void _PhysicsProcess(double delta)
         {
-            switch (_currentState)
-            {
-                case State.Flaming:
-                {
-                    _timer -= delta;
-                    if (_timer <= 0)
-                    {
-                        _currentState = State.CoolingDown;
-                        _timer = Cooldown;
-                    }
-                    break;
-                }
-
-                case State.CoolingDown:
-                {
-                    _timer -= delta;
-                    if (_timer <= 0)
-                    {
-                        _currentState = State.Ready;
-                    }
-                    break;
-                }
-            }
+            if (_cooldownTimer > 0)
+                _cooldownTimer -= delta;
         }
     }
 }

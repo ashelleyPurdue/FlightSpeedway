@@ -7,6 +7,7 @@ namespace FlightSpeedway
         private Node3D _visuals => GetNode<Node3D>("%Visuals");
         private Node3D _model => GetNode<Node3D>("%Model");
         private GpuParticles3D _particles => GetNode<GpuParticles3D>("%Particles");
+        private GpuParticles3D _reversedParticles => GetNode<GpuParticles3D>("%ReversedParticles");
         private Light3D _light => GetNode<Light3D>("%Light");
         private CollisionShape3D _shape => GetNode<CollisionShape3D>("%Shape");
 
@@ -36,17 +37,30 @@ namespace FlightSpeedway
             var particleMat = (ParticleProcessMaterial)_particles.ProcessMaterial;
             particleMat.InitialVelocityMin = _speed;
             particleMat.InitialVelocityMax = _speed;
+
+            _reversedParticles.Lifetime = time;
+            var reversedParticleMat = (ParticleProcessMaterial)_reversedParticles.ProcessMaterial;
+            reversedParticleMat.InitialVelocityMin = _speed;
+            reversedParticleMat.InitialVelocityMax = _speed;
         }
 
         public override void _Process(double deltaD)
         {
             float delta = (float)deltaD;
+            _visuals.Position += Vector3.Forward * _speed * delta;
 
             _model.Visible = _isActive;
-            _particles.Emitting = _isActive;
             _light.Visible = _isActive;
 
-            _visuals.Position += Vector3.Forward * _speed * delta;
+            _particles.Emitting = _isActive;
+            _particles.Scale = _isActive
+                ? Vector3.One
+                : Vector3.One * Mathf.Epsilon;
+
+            _reversedParticles.Emitting = _isActive;
+            _reversedParticles.Scale = !_isActive
+                ? Vector3.One
+                : Vector3.One * Mathf.Epsilon;
         }
 
         public override void _PhysicsProcess(double deltaD)

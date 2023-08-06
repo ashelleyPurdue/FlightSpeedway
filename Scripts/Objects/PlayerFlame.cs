@@ -9,7 +9,7 @@ namespace FlightSpeedway
         [Export] public float FlameDistance = 3;
         [Export] public float FlameAngleDeg = 45;
         [Export] public int Rings = 2;
-        [Export] public int DoritosPerRing = 6;
+        [Export] public int DoritosPerRing = 4;
         [Export] public PackedScene DoritoPrefab;
 
         private double _cooldownTimer = 0;
@@ -31,10 +31,14 @@ namespace FlightSpeedway
                 int ringIndex
             )
             {
-                float degreesPerDorito = 360f / doritos;
-                float doritoAngleOffset = ringIndex % 2 == 0
-                    ? 0
-                    : degreesPerDorito / 2;
+                float degreesPerDorito = 180f / (doritos - 1);
+                float doritoAngleOffset = 0;
+
+                if (ringIndex % 2 == 0)
+                {
+                    doritoAngleOffset = degreesPerDorito / 2;
+                    doritos--;
+                }
 
                 for (int i = 0; i < doritos; i++)
                 {

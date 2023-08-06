@@ -4,14 +4,19 @@ namespace FlightSpeedway
 {
     public partial class PlayerFlameDorito : Area3D
     {
+        private Node3D _visuals => GetNode<Node3D>("%Visuals");
         private Node3D _model => GetNode<Node3D>("%Model");
-        private CollisionShape3D _shape => GetNode<CollisionShape3D>("%Shape");
         private GpuParticles3D _particles => GetNode<GpuParticles3D>("%Particles");
         private Light3D _light => GetNode<Light3D>("%Light");
+        private CollisionShape3D _shape => GetNode<CollisionShape3D>("%Shape");
 
         private bool _isActive = false;
         private double _timeRemaining = 0;
         private float _speed;
+
+        private Vector3 _forward => Vector3.Forward
+            .Rotated(Vector3.Right, Rotation.X)
+            .Rotated(Vector3.Up, Rotation.Y);
 
         public override void _Ready()
         {
@@ -24,7 +29,8 @@ namespace FlightSpeedway
             _timeRemaining = time;
             _speed = distance / (float)time;
 
-            Position = Vector3.Zero;
+            _visuals.Position = Vector3.Zero;
+            _shape.Position = Vector3.Zero;
 
             _particles.Lifetime = time;
             var particleMat = (ParticleProcessMaterial)_particles.ProcessMaterial;
@@ -32,20 +38,23 @@ namespace FlightSpeedway
             particleMat.InitialVelocityMax = _speed;
         }
 
-        public override void _PhysicsProcess(double deltaD)
+        public override void _Process(double deltaD)
         {
             float delta = (float)deltaD;
 
             _model.Visible = _isActive;
             _particles.Emitting = _isActive;
             _light.Visible = _isActive;
+
+            _visuals.Position += Vector3.Forward * _speed * delta;
+        }
+
+        public override void _PhysicsProcess(double deltaD)
+        {
+            float delta = (float)deltaD;
+
             _shape.Disabled = !_isActive;
-
-            Vector3 forward = Vector3.Forward
-                .Rotated(Vector3.Right, Rotation.X)
-                .Rotated(Vector3.Up, Rotation.Y);
-
-            Position += forward * _speed * delta;
+            _shape.Position += Vector3.Forward * _speed * delta;
 
             if (_isActive)
             {

@@ -14,9 +14,6 @@ height = 0.2
 radial_segments = 4
 rings = 1
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5hipa"]
-points = PackedVector3Array(-0.1, 0, 0, 0.1, 0, 0, 0, -0.1, 0, 0, 0.1, 0, 0, 0, -0.2)
-
 [sub_resource type="Gradient" id="Gradient_r31qn"]
 offsets = PackedFloat32Array(0, 0.0963222, 0.348511, 1)
 colors = PackedColorArray(1, 1, 0, 1, 1, 0.313726, 0, 1, 1, 0.45098, 0, 1, 1, 0.462745, 0, 0)
@@ -67,29 +64,37 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_d7jr4")
 size = Vector2(0.2, 0.2)
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5hipa"]
+points = PackedVector3Array(-0.1, 0, 0, 0.1, 0, 0, 0, -0.1, 0, 0, 0.1, 0, 0, 0, -0.2)
+
 [node name="PlayerFlameDorito" type="Area3D"]
 script = ExtResource("1_86383")
 
-[node name="Model" type="MeshInstance3D" parent="."]
+[node name="Visuals" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Light" type="OmniLight3D" parent="Visuals"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0809954)
+
+[node name="Model" type="MeshInstance3D" parent="Visuals"]
 unique_name_in_owner = true
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, -0.3)
 material_override = SubResource("StandardMaterial3D_w2led")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_muqfm")
+skeleton = NodePath("../..")
 
-[node name="Shape" type="CollisionShape3D" parent="."]
+[node name="Particles" type="GPUParticles3D" parent="Visuals"]
 unique_name_in_owner = true
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_5hipa")
-
-[node name="Particles" type="GPUParticles3D" parent="."]
-unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
 amount = 50
 local_coords = true
 draw_order = 1
 process_material = SubResource("ParticleProcessMaterial_rw1n6")
 draw_pass_1 = SubResource("QuadMesh_8otty")
 
-[node name="Light" type="OmniLight3D" parent="."]
+[node name="Shape" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0809954)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_5hipa")

@@ -24,17 +24,30 @@ namespace FlightSpeedway
 
         public override void _Ready()
         {
-            float degreesPerRow = FlameAngleDeg / Rows;
-            float degreesPerDorito = FlameAngleDeg / DoritosPerRow;
-
             for (int r = 0; r < Rows; r++)
             {
+                float rowPercent = (float)r / Rows;
+                float maxYawDeg = FlameAngleDeg * Mathf.Sin(rowPercent * Mathf.Pi);
+
+                float pitchDeg = Mathf.Lerp(
+                    -FlameAngleDeg / 2,
+                    FlameAngleDeg / 2,
+                    rowPercent
+                );
+
                 for (int d = 0; d < DoritosPerRow; d++)
                 {
+                    float doritoPercent = (float)d / DoritosPerRow;
+                    float yawDeg = Mathf.Lerp(
+                        -maxYawDeg / 2,
+                        maxYawDeg / 2,
+                        doritoPercent
+                    );
+
                     var dorito = DoritoPrefab.Instantiate<PlayerFlameDorito>();
                     dorito.RotationDegrees = new Vector3(
-                        degreesPerRow * r - (FlameAngleDeg / 2),
-                        degreesPerDorito * d - (FlameAngleDeg / 2),
+                        pitchDeg,
+                        yawDeg,
                         0
                     );
 

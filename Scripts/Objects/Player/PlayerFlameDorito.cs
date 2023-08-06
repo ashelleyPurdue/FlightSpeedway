@@ -41,19 +41,19 @@ namespace FlightSpeedway
             _light.Visible = _isActive;
             _shape.Disabled = !_isActive;
 
-            if (!_isActive)
-                return;
-
-            _timeRemaining -= delta;
-
-            if (_timeRemaining <= 0)
-                _isActive = false;
-
             Vector3 forward = Vector3.Forward
                 .Rotated(Vector3.Right, Rotation.X)
                 .Rotated(Vector3.Up, Rotation.Y);
 
             Position += forward * _speed * delta;
+
+            if (_isActive)
+            {
+                _timeRemaining -= delta;
+
+                if (_timeRemaining <= 0)
+                    _isActive = false;
+            }
         }
 
         private void OnBodyEntered(Node3D body)

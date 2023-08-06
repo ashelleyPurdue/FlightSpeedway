@@ -1,4 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2jnde6qkybft"]
+[gd_scene load_steps=14 format=3 uid="uid://d2jnde6qkybft"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/Player/PlayerFlameDorito.cs" id="1_86383"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2led"]
 transparency = 1
@@ -64,21 +66,27 @@ material = SubResource("StandardMaterial3D_d7jr4")
 size = Vector2(0.2, 0.2)
 
 [node name="PlayerFlameDorito" type="Area3D"]
+script = ExtResource("1_86383")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Model" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.1)
 material_override = SubResource("StandardMaterial3D_w2led")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_muqfm")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Shape" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
 shape = SubResource("ConvexPolygonShape3D_5hipa")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="Particles" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
 amount = 50
+local_coords = true
 draw_order = 1
 process_material = SubResource("ParticleProcessMaterial_rw1n6")
 draw_pass_1 = SubResource("QuadMesh_8otty")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="Light" type="OmniLight3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0809954)

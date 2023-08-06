@@ -6,8 +6,8 @@ namespace FlightSpeedway
     {
         [Export] public double FlameDuration = 0.4;
         [Export] public double Cooldown = 0.4;
-        [Export] public float FlameDistance = 3;
-        [Export] public float FlameAngleDeg = 45;
+        [Export] public float FlameDistance = 6;
+        [Export] public float FlameAngleDeg = 22.5f;
         [Export] public int Rings = 2;
         [Export] public int DoritosPerRing = 4;
         [Export] public PackedScene DoritoPrefab;

@@ -34,8 +34,8 @@ spread = 0.0
 gravity = Vector3(0, 0, 0)
 initial_velocity_min = 1.0
 initial_velocity_max = 1.0
-scale_min = 3.0
-scale_max = 3.0
+scale_min = 6.0
+scale_max = 6.0
 scale_curve = SubResource("CurveTexture_m2lyp")
 color_ramp = SubResource("GradientTexture1D_jujcs")
 turbulence_noise_speed = Vector3(3, 3, 3)
@@ -87,8 +87,8 @@ spread = 0.0
 gravity = Vector3(0, 0, 0)
 initial_velocity_min = 1.0
 initial_velocity_max = 1.0
-scale_min = 3.0
-scale_max = 3.0
+scale_min = 6.0
+scale_max = 6.0
 scale_curve = SubResource("CurveTexture_vb7c1")
 color_ramp = SubResource("GradientTexture1D_bl5kg")
 turbulence_noise_speed = Vector3(3, 3, 3)
@@ -105,7 +105,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0809954)
 
 [node name="Model" type="MeshInstance3D" parent="Visuals"]
 unique_name_in_owner = true
-transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, -0.3)
+transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, 0, 0, -0.3)
 material_override = SubResource("StandardMaterial3D_w2led")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_muqfm")
@@ -122,7 +122,7 @@ draw_pass_1 = SubResource("QuadMesh_8otty")
 
 [node name="Shape" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_5hipa")
 
 [node name="Particles" type="GPUParticles3D" parent="."]

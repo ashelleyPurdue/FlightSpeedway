@@ -28,8 +28,8 @@ namespace FlightSpeedway
 
             _particles.Lifetime = time;
             var particleMat = (ParticleProcessMaterial)_particles.ProcessMaterial;
-            particleMat.InitialVelocityMin = _speed / 2;
-            particleMat.InitialVelocityMax = _speed / 2;
+            particleMat.InitialVelocityMin = _speed;
+            particleMat.InitialVelocityMax = _speed;
         }
 
         public override void _PhysicsProcess(double deltaD)
